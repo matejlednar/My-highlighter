@@ -49,7 +49,7 @@
 // data-conflict="prefix"     - changes library's prefix
 // data-highlight-only="true" - highlight only elements with class="code", no node clone
 
-/* Library's function overview
+/* Library's functions overview
   
    This is a part of the mllibrary.js (author: Matej Lednár)
    
