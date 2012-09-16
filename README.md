@@ -70,7 +70,7 @@ Library's functions overview
 - _.regEvent(element, event, function, phase)  registers an event listener
 - _.showCode()                if the script element contains data-code="true", displays content of all elements with 
                              class="code" 
-- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable run 
+- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable invoke 
                              _.showCode() automatically.
 - _.runLibrary()              runs showCode() and defines prefix of the library
 
