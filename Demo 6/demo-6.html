@@ -1,0 +1,59 @@
+<title>My highlighter demo page</title>
+<html>
+  <head>
+    <title>xmlstore</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="PhDr. Matej Lednár, PhD."/>    
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojox/grid/resources/claroGrid.css"/> 
+    <link rel="stylesheet" href="../default.css"/> 
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true, async:1"></script>
+    <script src="../my-highlighter.js" data-highlight-only="true" data-class="matej"></script>
+    <style type="text/css">
+    </style>
+  </head>
+
+  <body class="claro">
+    <h1>My highlighter demo page - Dojox data XML store / DataGrid sample</h1>
+    <h2>&lt;script src="my-highlighter.js" data-highlight-only="true" data-class="className">&lt;/script></h2>
+    <h3>&lt;link rel="stylesheet" href="default.css"/></h3> 
+    <h4>Default CSS themes, automatic highlighter activation, highlights inserted content only (&ltpre>&lt;code class="code"> content &lt/pre>&lt;/code>).</h4>
+    <h4>Own css class prefix (data-class="matej").</h4>
+    <pre><code class="matej">
+      <article data-dojo-type="dojox.data.XmlStore" data-dojo-props="rootItem: 'row', 
+      url : 'data-1.xml'" data-dojo-id="display">
+      </article>
+      <table data-dojo-type="dojox.grid.DataGrid" data-dojo-props="autoHeight : true, autoWidth : true, 
+      store : display" id="grid">
+        <thead>
+          <tr>
+            <th field="cell1">Column 1</th>
+            <th field="cell2">Column 2</th>
+          </tr>
+        </thead>
+      </table>
+      </code>
+    </pre>
+    <pre><code class="matej">
+      <article data-dojo-type="dojox.data.XmlStore" data-dojo-props="rootItem: 'row', 
+               url : 'data-1.xml'" data-dojo-id="display">
+      </article>
+
+      <table data-dojo-type="dojox.grid.DataGrid" data-dojo-props="autoHeight : true, autoWidth : true, 
+             store : display" id="grid">
+        <thead>
+          <tr>
+            <th field="cell1">Column 1</th>
+            <th field="cell2">Column 2</th>
+          </tr>
+        </thead>
+      </table>
+    </code>
+    </pre>    
+
+    <script>
+
+    </script>
+  </body>
+</html>
+

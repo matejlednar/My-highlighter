@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My highlighter demo page</title>
+    <meta charset="utf-8"/>
+    <meta name="author" content="PhDr. Matej Lednár, PhD."/>    
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css"/>
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojox/grid/resources/claroGrid.css"/> 
+    <link rel="stylesheet" href="../theme-1-modified.css"/> 
+    <script src="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dojo/dojo.js" type="text/javascript" data-dojo-config="parseOnLoad:true, async:1"></script>
+    <script src="../my-highlighter.js" data-code="false"></script>
+    <style type="text/css">
+    </style>
+  </head>
+
+  <body class="claro">
+    <h1>My highlighter demo page - Dojox data XML store / DataGrid sample</h1>
+    <h2>&lt;script src="my-highlighter.js" data-code="false">&lt;/script></h2>
+    <h3>&lt;link rel="stylesheet" href="theme-1-modified.css"/></h3> 
+    <h4>One of CSS themes, manual highlighter activation (data-code="false") with _.showCode() method.</h4>
+    <h5>Every _.showCode() method will be removed from the content.</h5>
+    <section class="code">
+      <article data-dojo-type="dojox.data.XmlStore" data-dojo-props="rootItem: 'row', url : 'data-1.xml'" data-dojo-id="display">
+      </article>
+
+      <table data-dojo-type="dojox.grid.DataGrid" data-dojo-props="autoHeight : true, autoWidth : true, store : display" id="grid">
+        <thead>
+          <tr>
+            <th field="cell1">Column 1</th>
+            <th field="cell2">Column 2</th>
+          </tr>
+        </thead>
+      </table>
+    </section>
+    <script class="code">
+      
+      require(["dojo/ready", "dojo/parser", "dojox/data/XmlStore", "dojox/grid/DataGrid"], function(ready, parser) {
+        ready(function() {
+        });
+      });
+      _.showCode();
+    </script>
+  </body>
+</html>
+

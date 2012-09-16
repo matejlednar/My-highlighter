@@ -1,0 +1,94 @@
+/*
+Color theme number 1
+Library CSS prefix - my
+*/
+
+.my-highlight-tag, .my-highlight-tag-html, 
+.my-highlight-tag-xml {
+  color : blue;
+} 
+
+.my-highlight-attribute, .my-highlight-attribute-html, 
+.my-highlight-attribute-xml {
+  color : gray;
+} 
+
+.my-highlight-javascript-operator {
+  color : gray;
+}
+
+.my-highlight-javascript {
+  color : navy;
+}
+
+.my-highlight-dom {
+  color : blue;
+}
+
+.my-highlight-string, .my-highlight-string-html, 
+.my-highlight-string-js, .my-highlight-string-xml {
+  color : green;
+}
+
+.my-highlight-semicolon {
+  color : navy;
+}
+
+.my-highlight-quotation {
+  color : gray;
+}
+
+.my-highlight-comment {
+  color : gray;
+} 
+
+.my-line-background-color-1 {
+  background-color: #EFECFF;
+}
+
+.my-line-background-color-2 {
+  background-color: #f0e68c;
+}
+
+.my-highlighter {
+
+}
+
+/* space between cells */
+.my-table-cell-spacing {
+  border-collapse : collapse;
+  line-height : 14px; 
+}
+
+.my-table-left-column-numbers {
+  min-width : 40px; 
+  padding-left : 15px;
+}
+
+.my-table-right-column-content {
+  padding-left : 15px;
+}
+
+/* middle column space formatter */
+.my-table-left-column {
+  margin : 0px; 
+  padding : 0px;
+}
+
+.my-columns-separator {
+  border-left: 2px dotted orange;
+}
+
+.my-even {
+
+}
+
+.my-odd {
+   
+}
+
+/* for special purpose e.g. line spaces */
+.my-special {
+  border-top: 5px solid white; 
+  border-bottom: 5px solid white; 
+}
