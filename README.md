@@ -13,8 +13,8 @@ User can use universal highlighter with class code, or special
 highlighters for HTML and JavaScript
  
 My highlighter features
-User can use own library prefix
-User can use own class name prefix
+User can use own library prefix\n
+User can use own class name prefix\n
 User can run library manually or automatic
 User can define colors and statements for HTML, XML, JavaScript and DOM
 User can use own CSS rules
