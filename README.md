@@ -1,7 +1,7 @@
 My-highlighter
 ==============
 
-Syntax Highlighter for JS, HTML, XML and DOM
+Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
 Verzia 1.09
 (c) 2012
