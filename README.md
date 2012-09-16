@@ -12,20 +12,21 @@ This library supports only latest web browsers.
 User can use universal highlighter with class code, or special 
 highlighters for HTML and JavaScript
  
-My highlighter features
-User can use own library prefix.
-User can use own class name prefix.
-User can run library manually or automatic.
-User can define colors and statements for HTML, XML, JavaScript and DOM.
-User can use own CSS rules.
-User can display and highlight website's source code (must be a descendant of the <body> element).
-User can display and highlight inserted content into &lt;pre>&lt;code> elements.
-User can define that content may displays only once, add data-code="once" to the target element.
+My highlighter features:
+- user can use own library prefix,
+- user can use own class name prefix,
+- user can run library manually or automatic,
+- user can define colors and statements for HTML, XML, JavaScript and DOM,
+- user can use own CSS rules,
+- user can display and highlight website's source code (must be a descendant of the <body> element),
+- user can display and highlight inserted content into &lt;pre>&lt;code> elements,
+- user can define that content may displays only once, add data-code="once" to the target element,
 
-TODO add JS/DOM support - more statements.
-TODO new option - change display order: output source &lt;--> source output.
-TODO highlight defined lines, e.g. data-highlight="2,5,6-8,11".
-TODO display plain text.
+TODO:
+- add JS/DOM support - more statements,
+- new option - change display order: output source &lt;--> source output,
+- highlight defined lines, e.g. data-highlight="2,5,6-8,11",
+- display plain text,
 
 Latest updates:
 - bug fixes,
