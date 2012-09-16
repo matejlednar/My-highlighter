@@ -46,8 +46,10 @@ Default library settings.
 
 Recommended settings for JavaScript frameworks (e.g. Dojo).
  Run showCode(); manually. showCode() method will be deleted from the output.
+
  <script src="my-highlighter.js" data-code="false"></script>
- _.showCode();  see demos
+ _.showCode();  // see demos
+
 
  HTML attributes description:
 - data-code="false"          - disables automatic highlighting, user can run the highlighter manually.
@@ -55,7 +57,7 @@ Recommended settings for JavaScript frameworks (e.g. Dojo).
 - data-conflict="prefix"     - changes library's prefix.
 - data-highlight-only="true" - highlight only elements with class="code", no node clone.
 
-Library's function overview
+Library's functions overview
   
    This is a part of the mllibrary.js (author: Matej Lednár)
    
