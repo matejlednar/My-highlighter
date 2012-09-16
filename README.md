@@ -20,7 +20,7 @@ My highlighter features:
 - user can use own CSS rules,
 - user can display and highlight website's source code (must be a descendant of the <body> element),
 - user can display and highlight inserted content into &lt;pre>&lt;code> elements,
-- user can define that content may displays only once, add data-code="once" to the target element,
+- user can define the content that may displays only once, add data-code="once" to the target element,
 
 TODO:
 - add JS/DOM support - more statements,
@@ -38,6 +38,9 @@ Use HTML script element for library activation.
 
 &lt;script [data-code="false|true"] [data-class="className"] 
 [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
+
+User can invoke _.showCode() method unlimited times and define elements that will be highlighted only once.
+&lt;element data-code="once"> content &lt;element>
 
 Default library settings.
 
