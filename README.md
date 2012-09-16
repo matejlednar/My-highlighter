@@ -13,13 +13,20 @@ User can use universal highlighter with class code, or special
 highlighters for HTML and JavaScript
  
 My highlighter features
-User can use own library prefix\n
-User can use own class name prefix\n
+User can use own library prefix
+
+User can use own class name prefix
+
 User can run library manually or automatic
+
 User can define colors and statements for HTML, XML, JavaScript and DOM
+
 User can use own CSS rules
+
 User can display and highlight website's source code (must be a descendant of the <body> element)
+
 User can display and highlight inserted content into &lt;pre>&lt;code> elements
+
 User can define that content may displays only once, add data-code="once" to the target element
 
 TODO add JS/DOM support - more statements
