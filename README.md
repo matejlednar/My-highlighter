@@ -40,7 +40,7 @@ Use HTML script element for library activation.
 [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
 
 User can invoke _.showCode() method unlimited times and defines elements that will be highlighted only once.
-&lt;element data-code="once"> content &lt;element>
+&lt;element data-code="once"> content &lt;/element>
 
 Default library settings.
 
