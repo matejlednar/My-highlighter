@@ -19,11 +19,11 @@ User can run library manually or automatic
 User can define colors and statements for HTML, XML, JavaScript and DOM
 User can use own CSS rules
 User can display and highlight website's source code (must be a descendant of the <body> element)
-User can display and highlight inserted content into <pre><code> elements
+User can display and highlight inserted content into &lt;pre>&lt;code> elements
 User can define that content may displays only once, add data-code="once" to the target element
 
 TODO add JS/DOM support - more statements
-TODO new option - change display order: output source <--> source output
+TODO new option - change display order: output source &lt;--> source output
 TODO highlight defined lines, e.g. data-highlight="2,5,6-8,11"
 TODO display plain text
 
@@ -34,12 +34,12 @@ Latest updates:
 - display once function
 
 Use HTML script element for library activation.
- <script [data-code="false|true"] [data-class="className"] 
- [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js"></script>
+ &lt;script [data-code="false|true"] [data-class="className"] 
+ [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
 
 Default library settings.
- <link rel="StyleSheet" type="text/css" href="default.css"/>
- <script src="my-highlighter.js"></script>
+ &lt;link rel="StyleSheet" type="text/css" href="default.css"/>
+ &lt;script src="my-highlighter.js">&lt;/script>
 
 Recommended settings for JavaScript frameworks (e.g. Dojo)
  Run showCode(); manually. showCode() method will be deleted from the output.
