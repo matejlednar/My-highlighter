@@ -61,11 +61,13 @@ Library's function overview
    Method name   		          Method description
 
  _.tag(element, index)		     gets an element from nodelist by index
- _.log(data)				           writes an argument into console
+ _.log(data)				             writes an argument into console
  _.regEvent(element, event, 
-   function, phase)            registers an event listener
- _.showCode()                  if the script element contains data-code="true", display content of all elements with class="code" 
- _.initLibrary()  			       allows change the library prefix via data-conflict attribute and enable / disable run _.showCode() automatically.
- _.runLibrary()                runs showCode() and defines prefix of the library
+   function, phase)          registers an event listener
+ _.showCode()                if the script element contains data-code="true", display content of all elements with 
+                             class="code" 
+ _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable run 
+                             _.showCode() automatically.
+ _.runLibrary()              runs showCode() and defines prefix of the library
 
 
