@@ -35,23 +35,25 @@ Latest updates:
 - display once function,
 
 Use HTML script element for library activation.
- &lt;script [data-code="false|true"] [data-class="className"] 
- [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
+
+&lt;script [data-code="false|true"] [data-class="className"] 
+[data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
 
 Default library settings.
+
  &lt;link rel="StyleSheet" type="text/css" href="default.css"/>
  &lt;script src="my-highlighter.js">&lt;/script>
 
-Recommended settings for JavaScript frameworks (e.g. Dojo)
+Recommended settings for JavaScript frameworks (e.g. Dojo).
  Run showCode(); manually. showCode() method will be deleted from the output.
  <script src="my-highlighter.js" data-code="false"></script>
  _.showCode();  see demos
 
  HTML attributes description:
- data-code="false"          - disables automatic highlighting, user can run the highlighter manually
- data-class="className"     - changes highlighter's class name
- data-conflict="prefix"     - changes library's prefix
- data-highlight-only="true" - highlight only elements with class="code", no node clone
+- data-code="false"          - disables automatic highlighting, user can run the highlighter manually.
+- data-class="className"     - changes highlighter's class name.
+- data-conflict="prefix"     - changes library's prefix.
+- data-highlight-only="true" - highlight only elements with class="code", no node clone.
 
 Library's function overview
   
@@ -61,14 +63,13 @@ Library's function overview
 
    Method name   		          Method description
 
- _.tag(element, index)		     gets an element from nodelist by index
- _.log(data)				             writes an argument into console
- _.regEvent(element, event, 
-   function, phase)          registers an event listener
- _.showCode()                if the script element contains data-code="true", display content of all elements with 
+- _.tag(element, index)		     gets an element from nodelist by index
+- _.log(data)				             writes an argument into console
+- _.regEvent(element, event, function, phase)  registers an event listener
+- _.showCode()                if the script element contains data-code="true", displays content of all elements with 
                              class="code" 
- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable run 
+- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable run 
                              _.showCode() automatically.
- _.runLibrary()              runs showCode() and defines prefix of the library
+- _.runLibrary()              runs showCode() and defines prefix of the library
 
 
