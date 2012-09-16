@@ -80,6 +80,5 @@ Library's functions overview
 
 Webs: 
 - work.mldgroup.com
-- matej.lednar.mldgroup.com
 - expertcode.mldgroup.com
 - howto.mldgroup.com /* replace expertcode */
