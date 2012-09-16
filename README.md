@@ -13,32 +13,25 @@ User can use universal highlighter with class code, or special
 highlighters for HTML and JavaScript
  
 My highlighter features
-User can use own library prefix
+User can use own library prefix.
+User can use own class name prefix.
+User can run library manually or automatic.
+User can define colors and statements for HTML, XML, JavaScript and DOM.
+User can use own CSS rules.
+User can display and highlight website's source code (must be a descendant of the <body> element).
+User can display and highlight inserted content into &lt;pre>&lt;code> elements.
+User can define that content may displays only once, add data-code="once" to the target element.
 
-User can use own class name prefix
-
-User can run library manually or automatic
-
-User can define colors and statements for HTML, XML, JavaScript and DOM
-
-User can use own CSS rules
-
-User can display and highlight website's source code (must be a descendant of the <body> element)
-
-User can display and highlight inserted content into &lt;pre>&lt;code> elements
-
-User can define that content may displays only once, add data-code="once" to the target element
-
-TODO add JS/DOM support - more statements
-TODO new option - change display order: output source &lt;--> source output
-TODO highlight defined lines, e.g. data-highlight="2,5,6-8,11"
-TODO display plain text
+TODO add JS/DOM support - more statements.
+TODO new option - change display order: output source &lt;--> source output.
+TODO highlight defined lines, e.g. data-highlight="2,5,6-8,11".
+TODO display plain text.
 
 Latest updates:
-- bug fixes
-- standalone syntax highlighting for HTML, JS, XML, and code (universal)
-- own colors for string in code, HTML, XML, and JS
-- display once function
+- bug fixes,
+- standalone syntax highlighting for HTML, JS, XML, and code (universal),
+- own colors for string in code, HTML, XML, and JS,
+- display once function,
 
 Use HTML script element for library activation.
  &lt;script [data-code="false|true"] [data-class="className"] 
