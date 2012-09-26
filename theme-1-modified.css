@@ -17,7 +17,15 @@ Library CSS prefix - my
   color : gray;
 }
 
-.my-highlight-javascript {
+.my-highlight-js-object {
+  color : navy;
+}
+
+.my-highlight-js-property {
+  color : navy;
+}
+
+.my-highlight-js-statement {
   color : navy;
 }
 

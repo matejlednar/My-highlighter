@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.12
+// Version 1.13
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,9 +24,9 @@
 // TODO display plain text
 
 // Latest updates:
-// New classes, my-special-begin and my-special-end for faster CSS styling
-// New statemens
-// Better statements identification
+// New classes for JavaScript objects, properties, and statements
+// Themes update for JavaScript objects, properties, and statements
+// New statements
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -170,10 +170,15 @@
       
       function highlightCode(data) {
         if (classCodeJS || classCode) {
-          var JS = ["search", "var ", "function", "if ", "else ", "switch", "case ", "return ", 
-            "this", "for ", "replace", "RegExp", "Object"];
+          var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", 
+          "Date", "Function", "Number", "String"];
         
-          var DOMObjects = ["document", "window", "history", "console"];
+          var JSProperties = ["search", "replace"];
+            
+          var JSStatements =  ["var", "function", "if", "else", "switch", "case", "return", 
+            "for"];
+        
+          var DOMObjects = ["this", "document", "window", "history", "console"];
       
           var DOMProperties = ["write", "submit", "reset", "forms", "writeln", 
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
@@ -182,11 +187,11 @@
           var JSOperators = [" / ", " - ", " \\? ", " \\* ", " \\+ ", " in ", 
           " delete ", "\\.", "\\(", "\\)", "\\[", "\\]", "typeof", " == ", 
           "instanceof", "\\{", "\\}", " &gt; ", " &lt; ", " &gt;= ", " &lt;= ", 
-          " = ", "\\!==", "==="];
+          " = ", "\\!==", "===", " new "];
       
           var JSOperatorsReplacer = [" / ", " - ", " ? ", " * ", " + ", " in ", 
           " delete ", ".", "(", ")", "[", "]", "typeof", " == ", "instanceof",
-          "{", "}", " &gt; ", " &lt; ", " &gt;= ", " &lt;= ", " = ", "!==", "==="];
+          "{", "}", " &gt; ", " &lt; ", " &gt;= ", " &lt;= ", " = ", "!==", "===", " new "];
         }
         
         var regexp;
@@ -256,27 +261,42 @@
         data = data.replace(/\"/g, "<span class='my-highlight-quotation'>\"</span>");
 
         if (classCodeJS || classCode) {
+          
+          // JavaScript objects
+          for ( index = 0; index < JSObjects.length; index ++) {
+            // with || without whitespace as a first char, .|;|( as a last char 
+            regexp = new RegExp("(\\(|\\s|^)"+ JSObjects[index] + "(\\.|;|\\(|$)", "g");
+            data = data.replace(regexp, "$1<span class='my-highlight-js-object'>" + JSObjects[index] + "</span>$2");
+          }
+
+
           // JavaScript statements
           var index = 0
-          for (index; index < JS.length; index ++) {
-            regexp = new RegExp(JS[index], "g");
-            data = data.replace(regexp, "<span class='my-highlight-javascript'>" + JS[index] + "</span>");
+          for (index; index < JSStatements.length; index ++) {
+            regexp = new RegExp("(\\(|\\s|^)" + JSStatements[index] + "(\\s|\\()", "g");
+            data = data.replace(regexp, "$1<span class='my-highlight-js-statement'>" + JSStatements[index] + "</span>$2");
           }
 
-          // DOM Objects
+          // JavaScript properties
+          for ( index = 0; index < JSProperties.length; index ++) {
+            // .property | .property; | .method( | .property) - condition | .property = | .property
+            regexp = new RegExp("<\\/span>\\." + JSProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
+            data = data.replace(regexp, "</span>.<span class='my-highlight-js-property'>" + JSProperties[index] + "</span>$1");
+          }
+
+          // DOM objects
           for ( index = 0; index < DOMObjects.length; index ++) {
-            // with || without whitespace as a first char, . as a last char 
-            regexp = new RegExp("(\\(|\\s|^)"+ DOMObjects[index] + "\\.", "g");
-            data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>.");
+            // with || without whitespace as a first char, .|; as a last char 
+            regexp = new RegExp("(\\(|\\s|^)"+ DOMObjects[index] + "(\\.|;)", "g");
+            data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>$2");
           }
 
-          // DOM Properties
+          // DOM properties
           for ( index = 0; index < DOMProperties.length; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
             regexp = new RegExp("<\\/span>\\." + DOMProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
             data = data.replace(regexp, "</span>.<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
           }
-
 
           // JavaScript operators
           for (index = 0; index < JSOperators.length; index ++) {

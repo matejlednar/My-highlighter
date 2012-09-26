@@ -17,7 +17,15 @@ Library CSS prefix - my
   color : chocolate;
 }
 
-.my-highlight-javascript {
+.my-highlight-js-object {
+  color : #4951F5;
+}
+
+.my-highlight-js-property {
+  color : #6D71C2;
+}
+
+.my-highlight-js-statement {
   color : blue;
 }
 
