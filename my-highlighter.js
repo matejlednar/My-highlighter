@@ -1,5 +1,5 @@
 // My highlighter
-// Verzia 1.11
+// Version 1.11
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
