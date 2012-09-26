@@ -3,11 +3,11 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Verzia 1.09
+Verzia 1.11
 (c) 2012
  Author: PhDr. Matej Lednár, PhD.
  
-JavaScript simple syntax highlighter with support XML, HTML, Javascript and DOM languages.
+JavaScript simple syntax highlighter with support XML, HTML, Javascript, and DOM languages.
 This library supports only latest web browsers. 
 User can use universal highlighter with class code, or special 
 highlighters for HTML and JavaScript

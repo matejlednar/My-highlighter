@@ -1,9 +1,9 @@
 // My highlighter
-// Verzia 1.09
+// Verzia 1.11
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
-// JavaScript simple syntax highlighter with support XML, HTML, Javascript and DOM languages.
+// JavaScript simple syntax highlighter with support XML, HTML, Javascript, and DOM languages.
 // This library supports only latest web browsers. 
 // User can use universal highlighter with class code, or special 
 // highlighters for HTML and JavaScript
@@ -24,10 +24,11 @@
 // TODO display plain text
 
 // Latest updates:
-// bug fixes
-// standalone syntax highlighting for HTML, JS, XML, and code (universal)
-// own colors for string in code, HTML, XML, and JS
-// display once function
+// 1.10 IE9 dataset bug fix, changed to get/setAttribute() method
+// 1.11 DOM objects and properties highlighting fix
+// 1.11 New classes for dom objects and dom properties
+// 1.11 Themes update for dom objects and dom properties
+// 1.11 New statements
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -171,12 +172,14 @@
       
       function highlightCode(data) {
         if (classCodeJS || classCode) {
-          var JS = ["search", "var ", "function", "if ", "else ", "switch", "case ", "return ",
-          "console", "log", "this", "for ", "replace", "RegExp", "Object"];
+          var JS = ["search", "var ", "function", "if ", "else ", "switch", "case ", "return ", 
+            "this", "for ", "replace", "RegExp", "Object"];
         
-          var DOM = ["submit", "reset", "document", "window", "forms", 
+          var DOMObjects = ["document", "window", "history", "console"];
+      
+          var DOMProperties = ["submit", "reset", "forms", "write", "writeln", 
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
-          "innerHTML", "firstChild", "createElement"];
+          "innerHTML", "firstChild", "createElement", "log"];
       
           var JSOperators = [" / ", " - ", " \\? ", " \\* ", " \\+ ", " in ", 
           " delete ", "\\.", "\\(", "\\)", "\\[", "\\]", "typeof", " == ", 
@@ -256,16 +259,27 @@
 
         if (classCodeJS || classCode) {
           // JavaScript statements
-          for (var index = 0; index < JS.length; index ++) {
+          var index = 0
+          for (index; index < JS.length; index ++) {
             regexp = new RegExp(JS[index], "g");
             data = data.replace(regexp, "<span class='my-highlight-javascript'>" + JS[index] + "</span>");
           }
 
-          // DOM statements
-          for ( index = 0; index < DOM.length; index ++) {
-            regexp = new RegExp(DOM[index], "g");
-            data = data.replace(regexp, "<span class='my-highlight-dom'>" + DOM[index] + "</span>");
+          // DOM Objects
+          for ( index = 0; index < DOMObjects.length; index ++) {
+            // with || without whitespace as a first char, . as a last char 
+            regexp = new RegExp("(\\s|^)"+ DOMObjects[index] + "\\.", "g");
+            console.log(regexp);
+            data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>.");
           }
+
+          // DOM Properties
+          for ( index = 0; index < DOMProperties.length; index ++) {
+            // .property | .property; | .method( | .property) - condition
+            regexp = new RegExp("\\." + DOMProperties[index] + "(\\)|\\(|;|\\s)", "g");
+            data = data.replace(regexp, ".<span class='my-highlight-dom-property'>" + DOMProperties[index] + "$1</span>");
+          }
+
 
           // JavaScript operators
           for (index = 0; index < JSOperators.length; index ++) {
@@ -488,9 +502,9 @@
       for(var i = 0; i < numberOfCodeElements; i++) {
         this.counter++;
         // display once checker, if data-code="once", sets data-code-done="true"
-        if (!codeElements[i].dataset.codeDone) {
-          if (codeElements[i].dataset.code == "once") {
-            codeElements[i].dataset.codeDone = "true";
+        if (!codeElements[i].getAttribute("data-code-done")) {
+          if (codeElements[i].getAttribute("data-code") == "once") {
+            codeElements[i].setAttribute("data-code-done", "true");
           }
           runHighlighterCore("." + this.className, self);
         }
@@ -504,9 +518,9 @@
       for(var i = 0; i < numberOfHTMLElements; i++) {
         this.counter++;
         // display once checker, if data-code="once", sets data-code-done="true"
-        if (!htmlElements[i].dataset.codeDone) {
-          if (htmlElements[i].dataset.code == "once") {
-            htmlElements[i].dataset.codeDone = "true";
+        if (!htmlElements[i].getAttribute("data-code-done")) {
+          if (htmlElements[i].getAttribute("data-code") == "once") {
+            htmlElements[i].setAttribute("data-code-done", "true");
           }        
           runHighlighterCore("." + this.className + "-html", self);
         }
@@ -520,9 +534,9 @@
       for(var i = 0; i < numberOfJSElements; i++) {
         this.counter++;
         // display once checker, if data-code="once", sets data-code-done="true"
-        if (!jsElements[i].dataset.codeDone) {
-          if (jsElements[i].dataset.code == "once") {
-            jsElements[i].dataset.codeDone = "true";
+        if (!jsElements[i].getAttribute("data-code-done")) {
+          if (jsElements[i].getAttribute("data-code") == "once") {
+            jsElements[i].setAttribute("data-code-done", "true");
           }
           runHighlighterCore("." + this.className + "-js", self);
         }

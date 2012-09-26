@@ -21,7 +21,11 @@ Library CSS prefix - my
   color : navy;
 }
 
-.my-highlight-dom {
+.my-highlight-dom-object {
+  color : blue;
+}
+
+.my-highlight-dom-property {
   color : blue;
 }
 
