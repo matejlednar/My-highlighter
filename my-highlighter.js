@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.14
+// Version 1.15
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// Better JavaScript operators identification
+// Performance optimization
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -262,7 +262,8 @@
         if (classCodeJS || classCode) {
           
           // JavaScript objects
-          for ( index = 0; index < JSObjects.length; index ++) {
+          var arrLength = JSObjects.length;
+          for ( index = 0; index < arrLength; index ++) {
             // with || without whitespace as a first char, .|;|( as a last char 
             regexp = new RegExp("(\\(|\\s|^)"+ JSObjects[index] + "(\\.|;|\\(|$)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-js-object'>" + JSObjects[index] + "</span>$2");
@@ -270,45 +271,52 @@
 
 
           // JavaScript statements
-          var index = 0
-          for (index; index < JSStatements.length; index ++) {
+          var index = 0;
+          arrLength = JSStatements.length;
+          for (index; index < arrLength; index ++) {
             regexp = new RegExp("(\\(|\\s|^)" + JSStatements[index] + "(\\s|\\()", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-js-statement'>" + JSStatements[index] + "</span>$2");
           }
 
           // JavaScript properties
-          for ( index = 0; index < JSProperties.length; index ++) {
+          arrLength = JSProperties.length;
+          for ( index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
             regexp = new RegExp("<\\/span>\\." + JSProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
             data = data.replace(regexp, "</span>.<span class='my-highlight-js-property'>" + JSProperties[index] + "</span>$1");
           }
 
           // DOM objects
-          for ( index = 0; index < DOMObjects.length; index ++) {
+          arrLength = DOMObjects.length;
+          for ( index = 0; index < arrLength; index ++) {
             // with || without whitespace as a first char, .|; as a last char 
             regexp = new RegExp("(\\(|\\s|^)"+ DOMObjects[index] + "(\\.|;)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>$2");
           }
 
           // DOM properties
-          for ( index = 0; index < DOMProperties.length; index ++) {
+          arrLength = DOMProperties.length;
+          for ( index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
             regexp = new RegExp("<\\/span>\\." + DOMProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
             data = data.replace(regexp, "</span>.<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
           }
 
           // JavaScript operators
-          
-          for (index = 0; index < JSOperators1.length; index ++) {
+          arrLength = JSOperators1.length;         
+          for (index = 0; index < arrLength; index ++) {
             regexp = new RegExp("(\\s)" + JSOperators1[index] + "(\\s)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-javascript-operator'>" + JSOperators1[index].replace(/\\/g, "") + "</span>$2");
           }
           
-          for (index = 0; index < JSOperators2.length; index ++) {
+          arrLength = JSOperators2.length;
+          for (index = 0; index < arrLength; index ++) {
             regexp = new RegExp("(\\(|\\s|^)" +JSOperators2[index] + "(\\s)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-javascript-operator'>" + JSOperators2[index] + "</span>$2");
           }
-          for (index = 0; index < JSOperators3.length; index ++) {
+          
+          arrLength = JSOperators3.length;
+          for (index = 0; index < arrLength; index ++) {
             regexp = new RegExp(JSOperators3[index], "g");
             data = data.replace(regexp, "<span class='my-highlight-javascript-operator'>" + JSOperators3[index].replace(/\\/g, "") + "</span>");
           }
@@ -332,7 +340,8 @@
         
         // string fix, removes words highlighting from strings  
         tmp = data.split("\"");
-        for (var tmpPart = 0; tmpPart < tmp.length; tmpPart++) {
+        tmpLength = tmp.length;
+        for (var tmpPart = 0; tmpPart < tmpLength; tmpPart++) {
           // every second part is string
           if (tmpPart % 2 == 1) {
             tmp[tmpPart] = tmp[tmpPart].replace(/my-highlight-semicolon/g, "my-highlight--").
