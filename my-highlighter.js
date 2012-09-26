@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.11
+// Version 1.12
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,11 +24,9 @@
 // TODO display plain text
 
 // Latest updates:
-// 1.10 IE9 dataset bug fix, changed to get/setAttribute() method
-// 1.11 DOM objects and properties highlighting fix
-// 1.11 New classes for dom objects and dom properties
-// 1.11 Themes update for dom objects and dom properties
-// 1.11 New statements
+// New classes, my-special-begin and my-special-end for faster CSS styling
+// New statemens
+// Better statements identification
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -177,9 +175,9 @@
         
           var DOMObjects = ["document", "window", "history", "console"];
       
-          var DOMProperties = ["submit", "reset", "forms", "write", "writeln", 
+          var DOMProperties = ["write", "submit", "reset", "forms", "writeln", 
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
-          "innerHTML", "firstChild", "createElement", "log"];
+          "innerHTML", "firstChild", "createElement", "log", "style"];
       
           var JSOperators = [" / ", " - ", " \\? ", " \\* ", " \\+ ", " in ", 
           " delete ", "\\.", "\\(", "\\)", "\\[", "\\]", "typeof", " == ", 
@@ -268,16 +266,15 @@
           // DOM Objects
           for ( index = 0; index < DOMObjects.length; index ++) {
             // with || without whitespace as a first char, . as a last char 
-            regexp = new RegExp("(\\s|^)"+ DOMObjects[index] + "\\.", "g");
-            console.log(regexp);
+            regexp = new RegExp("(\\(|\\s|^)"+ DOMObjects[index] + "\\.", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>.");
           }
 
           // DOM Properties
           for ( index = 0; index < DOMProperties.length; index ++) {
-            // .property | .property; | .method( | .property) - condition
-            regexp = new RegExp("\\." + DOMProperties[index] + "(\\)|\\(|;|\\s)", "g");
-            data = data.replace(regexp, ".<span class='my-highlight-dom-property'>" + DOMProperties[index] + "$1</span>");
+            // .property | .property; | .method( | .property) - condition | .property = | .property
+            regexp = new RegExp("<\\/span>\\." + DOMProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
+            data = data.replace(regexp, "</span>.<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
           }
 
 
@@ -449,10 +446,19 @@
         }
         
         // sets a special class e.g. for line spacing
+        
+        if (line == 1) {
+          background = background + " my-special-begin";
+        }
+        
         if (line > 1 && line < numberOfLines) {
           background = background + " my-special";
         }
-       
+
+        if (line == numberOfLines) {
+          background = background + " my-special-end";
+        }
+
         table = table + "<tr class='" + background + "'><td class='my-table-left-column-numbers'>" 
         + line + "</td></tr>";
       }
@@ -475,8 +481,17 @@
         }
         
         // sets a special class e.g. for line spacing
+        
+        if (line == 0) {
+          background = background + " my-special-begin";
+        }
+        
         if (line > 0 && line < (numberOfLines - 1)) {
           background = background + " my-special";
+        }
+
+        if (line == (numberOfLines - 1)) {
+          background = background + " my-special-end";
         }
  
         ContentLines[line] = highlight(ContentLines[line], background, self);
