@@ -20,7 +20,7 @@ My highlighter features:
 - user can use own CSS rules,
 - user can display and highlight website's source code (must be a descendant of the <body> element),
 - user can display and highlight inserted content into &lt;pre>&lt;code> elements,
-- user can define that content may displays only once, add data-code="once" to the target element,
+- user can define the content that may displays only once, add data-code="once" to the target element,
 
 TODO:
 - add JS/DOM support - more statements,
@@ -39,6 +39,9 @@ Use HTML script element for library activation.
 &lt;script [data-code="false|true"] [data-class="className"] 
 [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
 
+User can invoke _.showCode() method unlimited times and defines elements that will be highlighted only once.
+&lt;element data-code="once"> content &lt;/element>
+
 Default library settings.
 
  &lt;link rel="StyleSheet" type="text/css" href="default.css"/>
@@ -46,8 +49,10 @@ Default library settings.
 
 Recommended settings for JavaScript frameworks (e.g. Dojo).
  Run showCode(); manually. showCode() method will be deleted from the output.
+
  <script src="my-highlighter.js" data-code="false"></script>
- _.showCode();  see demos
+ _.showCode();  // see demos
+
 
  HTML attributes description:
 - data-code="false"          - disables automatic highlighting, user can run the highlighter manually.
@@ -55,7 +60,7 @@ Recommended settings for JavaScript frameworks (e.g. Dojo).
 - data-conflict="prefix"     - changes library's prefix.
 - data-highlight-only="true" - highlight only elements with class="code", no node clone.
 
-Library's function overview
+Library's functions overview
   
    This is a part of the mllibrary.js (author: Matej Lednár)
    
@@ -68,8 +73,12 @@ Library's function overview
 - _.regEvent(element, event, function, phase)  registers an event listener
 - _.showCode()                if the script element contains data-code="true", displays content of all elements with 
                              class="code" 
-- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable run 
+- _.initLibrary()  			        allows change the library prefix via data-conflict attribute and enable / disable invoke 
                              _.showCode() automatically.
 - _.runLibrary()              runs showCode() and defines prefix of the library
 
 
+Webs: 
+- work.mldgroup.com
+- expertcode.mldgroup.com
+- howto.mldgroup.com /* replace expertcode */
