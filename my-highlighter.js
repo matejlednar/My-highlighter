@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.13
+// Version 1.14
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,9 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// New classes for JavaScript objects, properties, and statements
-// Themes update for JavaScript objects, properties, and statements
-// New statements
+// Better JavaScript operators identification
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -176,7 +174,7 @@
           var JSProperties = ["search", "replace"];
             
           var JSStatements =  ["var", "function", "if", "else", "switch", "case", "return", 
-            "for"];
+          "for"];
         
           var DOMObjects = ["this", "document", "window", "history", "console"];
       
@@ -184,14 +182,15 @@
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
           "innerHTML", "firstChild", "createElement", "log", "style"];
       
-          var JSOperators = [" / ", " - ", " \\? ", " \\* ", " \\+ ", " in ", 
-          " delete ", "\\.", "\\(", "\\)", "\\[", "\\]", "typeof", " == ", 
-          "instanceof", "\\{", "\\}", " &gt; ", " &lt; ", " &gt;= ", " &lt;= ", 
-          " = ", "\\!==", "===", " new "];
+          // \s as a first char, \s as a last char
+          var JSOperators1 = ["/", "-", "\\?", "\\*", "\\+", "in", 
+          "==", "&gt;", "&lt;", "&gt;=", "&lt;=", "=", "\\!==", "===", "\\|\\|"];
       
-          var JSOperatorsReplacer = [" / ", " - ", " ? ", " * ", " + ", " in ", 
-          " delete ", ".", "(", ")", "[", "]", "typeof", " == ", "instanceof",
-          "{", "}", " &gt; ", " &lt; ", " &gt;= ", " &lt;= ", " = ", "!==", "===", " new "];
+          // \( | \s | ^ as a first char, \s as a last char
+          var JSOperators2 = ["delete", "typeof", "instanceof", "new"];
+      
+          // no \s | ^
+          var JSOperators3 = ["\\.", "\\(", "\\)", "\\[", "\\]", "\\{", "\\}"];
         }
         
         var regexp;
@@ -299,9 +298,19 @@
           }
 
           // JavaScript operators
-          for (index = 0; index < JSOperators.length; index ++) {
-            regexp = new RegExp(JSOperators[index], "g");
-            data = data.replace(regexp, "<span class='my-highlight-javascript-operator'>" + JSOperatorsReplacer[index] + "</span>");
+          
+          for (index = 0; index < JSOperators1.length; index ++) {
+            regexp = new RegExp("(\\s)" + JSOperators1[index] + "(\\s)", "g");
+            data = data.replace(regexp, "$1<span class='my-highlight-javascript-operator'>" + JSOperators1[index].replace(/\\/g, "") + "</span>$2");
+          }
+          
+          for (index = 0; index < JSOperators2.length; index ++) {
+            regexp = new RegExp("(\\(|\\s|^)" +JSOperators2[index] + "(\\s)", "g");
+            data = data.replace(regexp, "$1<span class='my-highlight-javascript-operator'>" + JSOperators2[index] + "</span>$2");
+          }
+          for (index = 0; index < JSOperators3.length; index ++) {
+            regexp = new RegExp(JSOperators3[index], "g");
+            data = data.replace(regexp, "<span class='my-highlight-javascript-operator'>" + JSOperators3[index].replace(/\\/g, "") + "</span>");
           }
         }
       
