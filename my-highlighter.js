@@ -261,17 +261,17 @@
 
         if (classCodeJS || classCode) {
           
-          // JavaScript objects
           var arrLength = JSObjects.length;
-          for ( index = 0; index < arrLength; index ++) {
+          var index = 0;
+          
+          // JavaScript objects          
+          for (index = 0; index < arrLength; index ++) {
             // with || without whitespace as a first char, .|;|( as a last char 
             regexp = new RegExp("(\\(|\\s|^)"+ JSObjects[index] + "(\\.|;|\\(|$)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-js-object'>" + JSObjects[index] + "</span>$2");
           }
 
-
           // JavaScript statements
-          var index = 0;
           arrLength = JSStatements.length;
           for (index; index < arrLength; index ++) {
             regexp = new RegExp("(\\(|\\s|^)" + JSStatements[index] + "(\\s|\\()", "g");
@@ -280,7 +280,7 @@
 
           // JavaScript properties
           arrLength = JSProperties.length;
-          for ( index = 0; index < arrLength; index ++) {
+          for (index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
             regexp = new RegExp("<\\/span>\\." + JSProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
             data = data.replace(regexp, "</span>.<span class='my-highlight-js-property'>" + JSProperties[index] + "</span>$1");
@@ -288,7 +288,7 @@
 
           // DOM objects
           arrLength = DOMObjects.length;
-          for ( index = 0; index < arrLength; index ++) {
+          for (index = 0; index < arrLength; index ++) {
             // with || without whitespace as a first char, .|; as a last char 
             regexp = new RegExp("(\\(|\\s|^)"+ DOMObjects[index] + "(\\.|;)", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-dom-object'>" + DOMObjects[index] + "</span>$2");
@@ -296,7 +296,7 @@
 
           // DOM properties
           arrLength = DOMProperties.length;
-          for ( index = 0; index < arrLength; index ++) {
+          for (index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
             regexp = new RegExp("<\\/span>\\." + DOMProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
             data = data.replace(regexp, "</span>.<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
