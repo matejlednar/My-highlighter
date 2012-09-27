@@ -3,7 +3,7 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Version 1.16
+Version 1.17
 (c) 2012
  Author: PhDr. Matej Lednár, PhD.
  
@@ -28,11 +28,9 @@ TODO:
 - highlight defined lines, e.g. data-highlight="2,5,6-8,11",
 - display plain text,
 
-Latest updates:
-- bug fixes,
-- standalone syntax highlighting for HTML, JS, XML, and code (universal),
-- own colors for string in code, HTML, XML, and JS,
-- display once function,
+Prohibited string:
+- ^^|^ - semicolon replacer
+
 
 Use HTML script element for library activation.
 

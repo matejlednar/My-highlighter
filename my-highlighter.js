@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.16
+// Version 1.17
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// BUGFIX JavaScript statements highlighting fix
+// HTML and XML elements - better identification
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -45,6 +45,9 @@
 // data-class="className"     - changes highlighter's class name
 // data-conflict="prefix"     - changes library's prefix
 // data-highlight-only="true" - highlight only elements with class="code", no node clone
+
+// Prohibited string
+// ^^|^ - semicolon replacer
 
 /* Library's functions overview
   
@@ -199,12 +202,9 @@
         regexp = new RegExp(" " + Fix + "=", "g");
         data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
         
-        // marks ;
-        data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
-
         // marks elements
         function highlightElements(classPostfix) {
-          data = data.replace(/(&lt;\/?[a-zA-Z-0-9\s-\":,\.'\(\)=]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
+          data = data.replace(/(&lt;\/?[a-zA-Z-0-9\s-\";:,\.'\(\)=\^\|]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
         }
         
         if (classCodeHTML) {
@@ -218,6 +218,9 @@
         if (classCodeXML) {
           highlightElements("-xml");          
         }
+
+        // marks semicolon ;
+        data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
 
         // marks atributtes
         function highlightAttributes(classPostfix) {
