@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.15
+// Version 1.16
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// Performance optimization
+// BUGFIX JavaScript statements highlighting fix
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -273,7 +273,7 @@
 
           // JavaScript statements
           arrLength = JSStatements.length;
-          for (index; index < arrLength; index ++) {
+          for (index = 0; index < arrLength; index ++) {
             regexp = new RegExp("(\\(|\\s|^)" + JSStatements[index] + "(\\s|\\()", "g");
             data = data.replace(regexp, "$1<span class='my-highlight-js-statement'>" + JSStatements[index] + "</span>$2");
           }
