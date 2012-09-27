@@ -78,5 +78,5 @@ Library's functions overview
 
 Webs: 
 - work.mldgroup.com
-- expertcode.mldgroup.com
-- howto.mldgroup.com /* replace expertcode */
+- expertcode.mldgroup.com /* will be replaced by howto */
+- howto.mldgroup.com 
