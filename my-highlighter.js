@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.18
+// Version 1.19
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,8 +24,8 @@
 // TODO display plain text
 
 // Latest updates:
-// Single line comments and strings support update
-// Add multiline comments support
+// Code comments update
+// Naming convention update
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -426,7 +426,7 @@
         return data;
       }
       
-      // delete left indentation
+      // deletes left indentation
       code = code.replace(/\t/g,"");  // removes tabs
       code = code.replace(/(^\s{6})|(^\s{4})/,""); // removes spaces 4 or 6
       code = highlightCode(code, self); // invoke highlighter
@@ -434,7 +434,7 @@
       return code;
     }
 
-    // delete empty lines before and after the content
+    // deletes empty lines before and after the content
     function deleteEmptyLinesEnds() {
       var code = source.innerHTML;
       var first_new_line_flag = code.indexOf("\n");
@@ -446,7 +446,7 @@
       }
       var blankLines;
       
-      // delete empty lines at the start
+      // deletes empty lines at the start
       do  {
         blankLines = isCode(code.slice(0, first_new_line_flag));
         if (!blankLines) {
@@ -460,7 +460,7 @@
         }
       } while (!blankLines);
       
-      // delete empty lines at the end
+      // deletes empty lines at the end
       do  {
         blankLines = isCode(code.slice(last_new_line_flag, code.length));
         if (!blankLines) {
@@ -493,12 +493,12 @@
       
       var content = document.querySelectorAll(className)[(i)].innerHTML;
       
-      // delete showCode() statement from content
+      // deletes showCode(); statement from content
       var tmpRegExp = new RegExp(self.prefix + "\\.showCode\\(\\);\\n?", "g");
       content = content.replace(tmpRegExp, "");
       content = content.replace(/(_\.showCode\()\);\n?/g, "");      
 
-      // escaping HTML/XML elements
+      // escapes HTML/XML elements
       content = content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
       content = content.replace(/;/g, "^^|^").replace(/&amp;/g, "&").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
@@ -511,15 +511,14 @@
         
       source.innerHTML = content;
 
-      // delete empty first and last lines
+      // deletes empty first and last lines
       deleteEmptyLinesEnds();
      
-      // display numbers
       content = source.innerHTML;
       
       var numberOfLines = content.match(/\n/g);
       
-      // checks if element is empty
+      // checks if an element is empty
       if (numberOfLines == null) {
         numberOfLines = 1;
       }
@@ -527,7 +526,8 @@
         numberOfLines = numberOfLines.length + 1;
       }
       
-      // displays numbers and tables
+      // this section build tables with line numbers and code
+      
       function getTableOpenTag(id) {
         var tableOpenTag = "<table class='my-table-column-" + id + 
         " my-table-cell-spacing'>";  
@@ -535,6 +535,7 @@
       }
       
       var tableCloseTag = "</table>";
+
       // column 1
       var table = getTableOpenTag(1);
       
@@ -552,7 +553,6 @@
         }
         
         // sets a special class e.g. for line spacing
-        
         if (line == 1) {
           background = background + " my-special-begin";
         }
@@ -570,7 +570,7 @@
       }
       var numbersTable = table + tableCloseTag;
       
-      // split content into lines
+      // splits the content into lines
       var ContentLines = content.split(/\n/g);
 
       // column 1
@@ -587,7 +587,6 @@
         }
         
         // sets a special class e.g. for line spacing
-        
         if (line == 0) {
           background = background + " my-special-begin";
         }
@@ -602,7 +601,8 @@
  
         ContentLines[line] = highlight(ContentLines[line], background, self);
       }
-      // joins lines into the final content and creates table
+      
+      // joins lines into the final content and build table
       var codeTable  = table + ContentLines.join("") + tableCloseTag;
       
       // displays final result (number and content)
@@ -683,31 +683,31 @@
     
   };
   
-  // load settings for library
+  // onload library settings
   _.initLibrary = function() {
-    var script_elements = document.getElementsByTagName("script");
-    var script_elements_number = script_elements.length;
+    var scriptElements = document.getElementsByTagName("script");
+    var scriptElements_number = scriptElements.length;
   
-    for (var i = 0; i < script_elements_number; i++) {
-      var srcAttr = script_elements[i].getAttribute("src");
+    for (var i = 0; i < scriptElements_number; i++) {
+      var srcAttr = scriptElements[i].getAttribute("src");
       if (srcAttr) {
-        var is_my_libary = srcAttr.lastIndexOf("my-highlighter");
-        if (srcAttr && is_my_libary != -1) {
+        var isItMyHighlighter = srcAttr.lastIndexOf("my-highlighter");
+        if (srcAttr && isItMyHighlighter != -1) {
           
-          this.prefix = script_elements[i].getAttribute("data-conflict");
+          this.prefix = scriptElements[i].getAttribute("data-conflict");
           
           // if code is false user will call _.showCode(); manually
-          var code = script_elements[i].getAttribute("data-code");
+          var code = scriptElements[i].getAttribute("data-code");
           if (code == "false") {
             this.code = false; 
           }
 
-          var highlightOnly = script_elements[i].getAttribute("data-highlight-only");
+          var highlightOnly = scriptElements[i].getAttribute("data-highlight-only");
           if (highlightOnly == "true") {
             this.highlightOnly = true; 
           }
           
-          var className = script_elements[i].getAttribute("data-class");
+          var className = scriptElements[i].getAttribute("data-class");
           if (className != null) {
             console.log(className);
             this.className = className; 
