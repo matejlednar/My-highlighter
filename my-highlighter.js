@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.17
+// Version 1.18
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,8 @@
 // TODO display plain text
 
 // Latest updates:
-// HTML and XML elements - better identification
+// Single line comments and strings support update
+// Add multiline comments support
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -84,29 +85,29 @@
   _.counter = 0;
   
   /** _.tag
-  * gets an element from nodelist by index
-  * @param {String} element - the name of the element
-  * @param {Number} index - index of the element in the nodelist
-  */ 
+   * gets an element from nodelist by index
+   * @param {String} element - the name of the element
+   * @param {Number} index - index of the element in the nodelist
+   */ 
   _.tag = function(element, index) {
     return document.getElementsByTagName(element)[index];
   };
   
   /** _.log
-  * writes an argument into console
-  * @param {String} data - text for the console
-  */
+   * writes an argument into console
+   * @param {String} data - text for the console
+   */
   _.log = function(data) {
     console.log(data);
   };
    
   /**_.regEvent
-  * create event listener
-  * @param {String} element - DOM node
-  * @param {String} event - name of the event
-  * @param {Function} fun - name of the registered function
-  * @param {Boolean} phase - has capture phase? [true | false]
-  */
+   * create event listener
+   * @param {String} element - DOM node
+   * @param {String} event - name of the event
+   * @param {Function} fun - name of the registered function
+   * @param {Boolean} phase - has capture phase? [true | false]
+   */
   _.regEvent = function(element, event, fun, phase) {
     phase = !!phase;
     if(element.addEventListener == undefined) {
@@ -117,12 +118,12 @@
   };
 
   /** _.unregEvent
-  * remove event listener 
-  * @param {String} element - DOM node
-  * @param {String} event - name of the event
-  * @param {Function} fun - name of the registered function
-  * @param {Boolean} phase - has capture phase? [true | false]
-  */
+   * remove event listener 
+   * @param {String} element - DOM node
+   * @param {String} event - name of the event
+   * @param {Function} fun - name of the registered function
+   * @param {Boolean} phase - has capture phase? [true | false]
+   */
   _.unregEvent = function(element, event, fun, phase) {
     phase = !!phase;
     if(element.removeEventListener == undefined)
@@ -133,11 +134,11 @@
   };
   
   /** _.showCode() content highlighter
-  * highlights element's conntent
-  * default class: code
-  * data-code attribute with false value deactivates highlighting
-  * @param {String} className - value of the data-class attribute if was set
-  */
+   * highlights element's conntent
+   * default class: code
+   * data-code attribute with false value deactivates highlighting
+   * @param {String} className - value of the data-class attribute if was set
+   */
   _.showCode = function(className) {
     var self = this;
     // set class for highlighter
@@ -169,7 +170,7 @@
       var classCodeHTML = self.classCodeHTML;
       var classCodeXML = self.classCodeXML;
       
-      function highlightCode(data) {
+      function highlightCode(data, self) {
         if (classCodeJS || classCode) {
           var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", 
           "Date", "Function", "Number", "String"];
@@ -177,7 +178,7 @@
           var JSProperties = ["search", "replace"];
             
           var JSStatements =  ["var", "function", "if", "else", "switch", "case", "return", 
-          "for"];
+          "for", "new"];
         
           var DOMObjects = ["this", "document", "window", "history", "console"];
       
@@ -334,37 +335,100 @@
             var lastPart = "//" + tmp.join("//");
           
             // removes highlighting after //
-            lastPart = lastPart.replace(/my-highlight-/g, "my-highlight--");
+            lastPart = lastPart.replace(/class='my-highlight-[a-z-]*'/g, "");
           
             // highlights comment
             data = firstPart + "<span class='my-highlight-comment'>" + lastPart + "</span>";
           }
         }
         
-        // string fix, removes words highlighting from strings  
-        tmp = data.split("\"");
-        tmpLength = tmp.length;
-        for (var tmpPart = 0; tmpPart < tmpLength; tmpPart++) {
-          // every second part is string
-          if (tmpPart % 2 == 1) {
-            tmp[tmpPart] = tmp[tmpPart].replace(/my-highlight-semicolon/g, "my-highlight--").
-            replace(/my-highlight-tag/g, "my-highlight--").
-            replace(/my-highlight-attribute/g, "my-highlight--").
-            replace(/my-highlight-javascript-operator/g, "my-highlight--").
-            replace(/my-highlight-javascript/g, "my-highlight--").
-            replace(/my-highlight-dom/g, "my-highlight--").
-            replace(/my-highlight-comment/g, "my-highlight--");
+        // string highlighting fix, removes highlighted words and chars from strings  
+        tmp = data.split("<span class='my-highlight-quotation'>\"</span>");
+        var tmpLength = tmp.length;
+        if (tmpLength > 0) {
+          for (var tmpPart = 0; tmpPart < tmpLength; tmpPart++) {
+            // every second part is string
+            if (tmpPart % 2 == 1) {
+              tmp[tmpPart] = tmp[tmpPart].replace(/my-highlight-string/g, "my-highlightString");
+              tmp[tmpPart] = tmp[tmpPart].replace(/class='my-highlight-[a-z-]*'/g, "");
+              tmp[tmpPart] = tmp[tmpPart].replace(/my-highlightString/g, "my-highlight-string");
+            }
+          }
+        }
+        // adds quotation mark with highlighting
+        data = tmp.join("<span class='my-highlight-quotation'>\"</span>");
+        
+        // multiline comments marker
+        var startFlag = data.match(/\/\*/g);
+        var endFlag = data.match(/\*\//g);
+        var sFlagLength = startFlag ? startFlag.length : 0;
+        var eFlagLength = endFlag ? endFlag.length : 0;
+        if (sFlagLength || eFlagLength) {
+          
+          if (sFlagLength == 1 && eFlagLength == 1) {
+            tmp = [];
+            tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*\*\//g);
+            tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
+            data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
+          }
+          
+          // more /* */ comments in one line
+          if (sFlagLength > 1 && eFlagLength > 1 && (sFlagLength == eFlagLength)) {
+            var tmp1 = [];
+            tmp = [];
+            tmp = data.split("/*");
+            tmpLength = tmp.length;
+            var counter = 0, result = "";
+            for (counter; counter < tmpLength; counter++){
+              tmp1 = tmp[counter].split("*/");
+              if (tmp1[0] != "") {
+                tmp1[0] = "/*" + tmp1[0].replace(/class='my-highlight-[a-z-]*'/g, "");
+                result += tmp1.join("*/");
+              }
+            }
+            data = result;  
+            data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>/*$2*/</span>");
+          }
+          
+          // highlights content after /*
+          if (sFlagLength == 1 && eFlagLength == 0) {
+            tmp = [];
+            tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*/g);
+            tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
+            data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)/g, "<span class='my-highlight-comment'>" + tmp[0] +"</span>");
+
+            // multiline comment start flag
+            self.multilineComment = true;
+          }
+          
+          // highlights content before */
+          if (sFlagLength == 0 && eFlagLength == 1) {
+            tmp = [];
+            tmp = data.match(/[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*\*\//g);
+            tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
+            data = data.replace(/([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] +"</span>");
+
+            // multiline comment end flag
+            self.multilineComment = false;
           }
         }
         
-        data = tmp.join("\"");
+        // checks if this line is inside the multiline comment
+        if (self.multilineComment) {
+          data = data.replace(/class='my-highlight-[a-z-]*'/g, "");
+          data = "<span class='my-highlight-comment'>" + data +"</span>"
+        }
+      
+        // end of multiline comments
+
+        // returns higlighted line
         return data;
       }
       
       // delete left indentation
       code = code.replace(/\t/g,"");  // removes tabs
       code = code.replace(/(^\s{6})|(^\s{4})/,""); // removes spaces 4 or 6
-      code = highlightCode(code); // invoke highlighter
+      code = highlightCode(code, self); // invoke highlighter
       code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "&nbsp;</td></tr>";
       return code;
     }
