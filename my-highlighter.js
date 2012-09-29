@@ -365,6 +365,7 @@
         var eFlagLength = endFlag ? endFlag.length : 0;
         if (sFlagLength || eFlagLength) {
           
+          // one /* */ comment in a line
           if (sFlagLength == 1 && eFlagLength == 1) {
             tmp = [];
             tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*\*\//g);
@@ -372,7 +373,7 @@
             data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
           }
           
-          // more /* */ comments in one line
+          // more /* */ comments in a line
           if (sFlagLength > 1 && eFlagLength > 1 && (sFlagLength == eFlagLength)) {
             var tmp1 = [];
             tmp = [];
