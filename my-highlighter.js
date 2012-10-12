@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.19
+// Version 1.20
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,8 +24,8 @@
 // TODO display plain text
 
 // Latest updates:
-// Code comments update
-// Naming convention update
+// New statements
+// Better properties recognition
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -175,7 +175,7 @@
           var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", 
           "Date", "Function", "Number", "String"];
         
-          var JSProperties = ["search", "replace"];
+          var JSProperties = ["search", "replace", "length", "value", "slice"];
             
           var JSStatements =  ["var", "function", "if", "else", "switch", "case", "return", 
           "for", "new"];
@@ -184,7 +184,8 @@
       
           var DOMProperties = ["write", "submit", "reset", "forms", "writeln", 
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
-          "innerHTML", "firstChild", "createElement", "log", "style"];
+          "innerHTML", "firstChild", "createElement", "log", "style", "getElementsByTagName",
+          "setSelectionRange", "selectionStart", "selectionEnd"];
       
           // \s as a first char, \s as a last char
           var JSOperators1 = ["/", "-", "\\?", "\\*", "\\+", "in", 
@@ -286,8 +287,8 @@
           arrLength = JSProperties.length;
           for (index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
-            regexp = new RegExp("<\\/span>\\." + JSProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
-            data = data.replace(regexp, "</span>.<span class='my-highlight-js-property'>" + JSProperties[index] + "</span>$1");
+            regexp = new RegExp("\\." + JSProperties[index] + "(\\)|\\(|;|\\.|<span class='my-highlight-|\\s=\\s|,)", "g");
+            data = data.replace(regexp, ".<span class='my-highlight-js-property'>" + JSProperties[index] + "</span>$1");
           }
 
           // DOM objects
@@ -302,8 +303,8 @@
           arrLength = DOMProperties.length;
           for (index = 0; index < arrLength; index ++) {
             // .property | .property; | .method( | .property) - condition | .property = | .property
-            regexp = new RegExp("<\\/span>\\." + DOMProperties[index] + "(\\)|\\(|;|\\s|<span|\\.|$)", "g");
-            data = data.replace(regexp, "</span>.<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
+            regexp = new RegExp("\\." + DOMProperties[index] + "(\\)|\\(|;|\\.|<span class='my-highlight-|\\s=\\s|,)", "g");
+            data = data.replace(regexp, ".<span class='my-highlight-dom-property'>" + DOMProperties[index] + "</span>$1");
           }
 
           // JavaScript operators
