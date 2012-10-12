@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.20
+// Version 1.21
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,8 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// New statements
-// Better properties recognition
+// Bug fix - empty elements
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -493,6 +492,12 @@
       }
       
       var content = document.querySelectorAll(className)[(i)].innerHTML;
+      
+      // has element content? no content == no highlight
+      var tmp = /\w|[\]\[!"#\$%&'\(\)*+,\.\/:;<=>?@\^_`\{\|\}~-]/g;
+      if (!tmp.test(content)) {
+        return;
+      }
       
       // deletes showCode(); statement from content
       var tmpRegExp = new RegExp(self.prefix + "\\.showCode\\(\\);\\n?", "g");
