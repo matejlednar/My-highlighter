@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.21
+// Version 1.22
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// Bug fix - empty elements
+// Bug fix - last semicolon deletion
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -81,7 +81,7 @@
   _.classCodeHTML = false;
   _.classCodeJS = false;
   _.classCodeXML = false;
-  _.counter = 0;
+  _.counter = 0;            // code section identifier
   
   /** _.tag
    * gets an element from nodelist by index
@@ -151,6 +151,7 @@
     className = "." + className;
     var highlightOnly = this.highlightOnly;
     
+    // detects highlighting sections  
     var codeElements = document.querySelectorAll(className);
     var numberOfCodeElements = codeElements.length;
     
@@ -184,7 +185,7 @@
           var DOMProperties = ["write", "submit", "reset", "forms", "writeln", 
           "getElementById", "childNodes", "value", "nodeValue", "innerText", 
           "innerHTML", "firstChild", "createElement", "log", "style", "getElementsByTagName",
-          "setSelectionRange", "selectionStart", "selectionEnd"];
+          "setSelectionRange", "selectionStart", "selectionEnd", "focus"];
       
           // \s as a first char, \s as a last char
           var JSOperators1 = ["/", "-", "\\?", "\\*", "\\+", "in", 
@@ -417,7 +418,7 @@
         // checks if this line is inside the multiline comment
         if (self.multilineComment) {
           data = data.replace(/class='my-highlight-[a-z-]*'/g, "");
-          data = "<span class='my-highlight-comment'>" + data +"</span>"
+          data = "<span class='my-highlight-comment'>" + data +"</span>";
         }
       
         // end of multiline comments
@@ -439,9 +440,10 @@
       var code = source.innerHTML;
       var first_new_line_flag = code.indexOf("\n");
       var last_new_line_flag = code.lastIndexOf("\n");
+      
       // checks if exists any text after the last \n 
       function isCode(text) {
-        var regExp = /[a-zA-Z;\.0-9\()\{\}<>\"]/g;
+        var regExp = /[a-zA-Z;\.0-9\()\{\}<>\^\|\"]/g;
         return regExp.test(text);
       }
       var blankLines;
@@ -505,8 +507,8 @@
       content = content.replace(/(_\.showCode\()\);\n?/g, "");      
 
       // escapes HTML/XML elements
-      content = content.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-      content = content.replace(/;/g, "^^|^").replace(/&amp;/g, "&").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      content = content.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+      content = content.replace(/;/g, "^^|^").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
       if (highlightOnly == false) {
         source = document.querySelector(".code-element-" + self.counter)
@@ -549,7 +551,7 @@
       var  backgroundColor1 = "my-line-background-color-1 my-odd";
       var  backgroundColor2 = "my-line-background-color-2 my-even";
          
-      // creates line numbers
+      // creates numbers and lines for numbers
       for (var line = 1; line < numberOfLines + 1; line++) {
         if ((line % 2) == 1) {
           background = backgroundColor1;
@@ -582,7 +584,7 @@
       // column 1
       table = getTableOpenTag(2);
 
-      // removes first indentation and creates table line
+      // creates lines for code
       for (line = 0; line < numberOfLines; line++) {
         
         if ((line % 2) == 0) {
