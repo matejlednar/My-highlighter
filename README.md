@@ -76,7 +76,6 @@ Library's functions overview
 - _.runLibrary()              runs showCode() and defines prefix of the library
 
 
-Webs: 
+Web sites: 
 - work.mldgroup.com
-- expertcode.mldgroup.com /* will be replaced by howto */
-- howto.mldgroup.com 
+- how-to.mldgroup.com 
