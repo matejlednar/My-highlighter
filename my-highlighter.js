@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.22
+// Version 1.23
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// Bug fix - last semicolon deletion
+// Bug fix - last apostrophe deletion
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] 
@@ -443,7 +443,7 @@
       
       // checks if exists any text after the last \n 
       function isCode(text) {
-        var regExp = /[a-zA-Z;\.0-9\()\{\}<>\^\|\"]/g;
+        var regExp = /[a-zA-Z;\.0-9\()\{\}<>\^\|\"']/g;
         return regExp.test(text);
       }
       var blankLines;
