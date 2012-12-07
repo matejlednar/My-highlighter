@@ -3,7 +3,7 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Version 1.23
+Version 1.24
 (c) 2012
  Author: PhDr. Matej Lednár, PhD.
  
@@ -34,7 +34,7 @@ Prohibited string:
 
 Use HTML script element for library activation.
 
-&lt;script [data-code="false|true"] [data-class="className"] 
+&lt;script [data-code="false|true"] [data-class="className"] [data-indent="true"]
 [data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
 
 User can invoke _.showCode() method unlimited times and defines elements that will be highlighted only once.
@@ -56,7 +56,8 @@ Recommended settings for JavaScript frameworks (e.g. Dojo).
 - data-code="false"          - disables automatic highlighting, user can run the highlighter manually.
 - data-class="className"     - changes highlighter's class name.
 - data-conflict="prefix"     - changes library's prefix.
-- data-highlight-only="true" - highlight only elements with class="code", no node clone.
+- data-highlight-only="true" - highlights only elements with class="code", no node clone.
+- data-indent="true"         - allows left indentation of the content
 
 Library's functions overview
   
