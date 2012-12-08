@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.24
+// Version 1.25
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,9 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// data-indent attribute allows left indentation
-// better elements supports
-// sk language support
+// forgotten &nbsp; deletion
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -430,7 +428,7 @@
             }
 
             code = highlightCode(code, self); // invoke highlighter
-            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "&nbsp;</td></tr>";
+            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "</td></tr>";
             return code;
         }
 
