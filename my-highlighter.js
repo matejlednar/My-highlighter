@@ -426,10 +426,13 @@
             if (!self.codeIndent) {
                 code = code.replace(/(^\s{6})|(^\s{4})/, ""); // removes spaces 4 or 6
             }
-
+            
             code = highlightCode(code, self); // invoke highlighter
-            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + 
-                    code + "<span class='my-empty-space'>.</span></td></tr>";
+            // entity &#32; creates correct empty line height
+            if (code == "") {
+              code = code + "&#32;";
+            }
+            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "</td></tr>";
             return code;
         }
 
