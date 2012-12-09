@@ -104,3 +104,7 @@ Library CSS prefix - my
   border-top: 5px solid white; 
   border-bottom: 5px solid white; 
 }
+
+.my-empty-space {
+  visibility : hidden;
+}

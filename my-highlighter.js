@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.25
+// Version 1.26
 // (c) 2012
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// forgotten &nbsp; deletion
+// empty space fix
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -428,7 +428,8 @@
             }
 
             code = highlightCode(code, self); // invoke highlighter
-            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "</td></tr>";
+            code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + 
+                    code + "<span class='my-empty-space'>.</span></td></tr>";
             return code;
         }
 
