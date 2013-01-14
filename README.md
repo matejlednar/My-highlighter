@@ -3,8 +3,8 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Version 1.26
-(c) 2012
+Version 1.27
+(c) 2012-2013
  Author: PhDr. Matej Lednár, PhD.
  
 JavaScript simple syntax highlighter with support XML, HTML, Javascript, and DOM languages.

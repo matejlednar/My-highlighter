@@ -1,6 +1,6 @@
 // My highlighter
-// Version 1.26
-// (c) 2012
+// Version 1.27
+// (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
 // JavaScript simple syntax highlighter with support XML, HTML, Javascript, and DOM languages.
@@ -24,7 +24,9 @@
 // TODO display plain text
 
 // Latest updates:
-// empty space fix
+// bugfix file://, ftp://, http:// https:// were as comments, last chars //
+// bugfix char \ was not include in char definition
+// add new JavaScript methods
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -170,7 +172,8 @@
                 if (classCodeJS || classCode) {
                     var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", "Date", "Function", "Number", "String"];
 
-                    var JSProperties = ["search", "replace", "length", "value", "slice"];
+                    var JSProperties = ["search", "replace", "length", "value", "slice", "split", "round", "ceil",
+                    "floor"];
 
                     var JSStatements = ["var", "function", "if", "else", "switch", "case", "return", "for", "new"];
 
@@ -194,6 +197,9 @@
                 regexp = new RegExp(" " + Fix + "=", "g");
                 data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
 
+                // safety single comment section // replacement
+                data = data.replace(/(http:|https:|ftp:|file:)\/\//g, "$1&#47;&#47;");
+                
                 // marks elements
                 function highlightElements(classPostfix) {
                     //  data = data.replace(/(&lt;\/?[a-zA-Z-0-9\s-\";:,\.'\(\)=\^\|]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
@@ -235,7 +241,7 @@
 
                 // marks strings, user can define special colors for code, JS and HTML
                 function highlightString(classPostfix) {
-                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?>#\$&\^%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
+                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?>#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
                 }
                 if (classCodeHTML) {
                     highlightString("-html");
