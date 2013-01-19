@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.27
+// Version 1.28
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,9 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// bugfix file://, ftp://, http:// https:// were as comments, last chars //
-// bugfix char \ was not include in char definition
-// add new JavaScript methods
+// bugfix comments processing
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -172,8 +170,7 @@
                 if (classCodeJS || classCode) {
                     var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", "Date", "Function", "Number", "String"];
 
-                    var JSProperties = ["search", "replace", "length", "value", "slice", "split", "round", "ceil",
-                    "floor"];
+                    var JSProperties = ["search", "replace", "length", "value", "slice", "split", "round", "ceil", "floor"];
 
                     var JSStatements = ["var", "function", "if", "else", "switch", "case", "return", "for", "new"];
 
@@ -199,7 +196,7 @@
 
                 // safety single comment section // replacement
                 data = data.replace(/(http:|https:|ftp:|file:)\/\//g, "$1&#47;&#47;");
-                
+
                 // marks elements
                 function highlightElements(classPostfix) {
                     //  data = data.replace(/(&lt;\/?[a-zA-Z-0-9\s-\";:,\.'\(\)=\^\|]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
@@ -432,11 +429,11 @@
             if (!self.codeIndent) {
                 code = code.replace(/(^\s{6})|(^\s{4})/, ""); // removes spaces 4 or 6
             }
-            
+
             code = highlightCode(code, self); // invoke highlighter
             // entity &#32; creates correct empty line height
             if (code == "") {
-              code = code + "&#32;";
+                code = code + "&#32;";
             }
             code = "<tr class='" + background + "'><td class='my-table-right-column-content'>" + code + "</td></tr>";
             return code;
@@ -450,7 +447,7 @@
 
             // checks if exists any text after the last \n 
             function isCode(text) {
-                var regExp = /[a-zA-Z;\.0-9\()\{\}<>\^\|\"']/g;
+                var regExp = /[^\s]/g;
                 return regExp.test(text);
             }
             var blankLines;
