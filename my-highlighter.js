@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.28
+// Version 1.29
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -402,10 +402,9 @@
                     // highlights content before */
                     if (sFlagLength == 0 && eFlagLength == 1) {
                         tmp = [];
-                        tmp = data.match(/[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*\*\//g);
+                        tmp = data.match(/.*\*\//g);
                         tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                        data = data.replace(/([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
-
+                        data = data.replace(/(.*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
                         // multiline comment end flag
                         self.multilineComment = false;
                     }
