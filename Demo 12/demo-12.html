@@ -1,7 +1,7 @@
-<title>My highlighter demo page</title>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>xmlstore</title>
+    <title>My highlighter demo page</title>
     <meta charset="utf-8"/>
     <meta name="author" content="PhDr. Matej Lednár, PhD."/>    
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css"/>
@@ -14,55 +14,47 @@
   </head>
 
   <body class="claro">
-    <h1>My highlighter demo page - Dojox data XML store / DataGrid sample</h1>
+    <h1>My highlighter demo page</h1>
     <h2>&lt;script src="my-highlighter.js" data-highlight-only="true">&lt;/script></h2>
     <h3>&lt;link rel="stylesheet" href="default.css"/></h3> 
-    <h4>Default CSS themes, automatic highlighter activation, highlights inserted content only (&ltpre>&lt;code class="code"> content &lt/pre>&lt;/code>).</h4>
+    <h4>Default CSS themes, automatic highlighter activation, highlights inserted content only (&lt;textarea class="code"> content &lt;/textarea>).</h4>
     <h4>Special formatting with all postfixes -js, -html, xml, and default code (universal highlighting).</h4>
     <section>-js</section>
-    <pre><code class="code-js">
+    <textarea class="code-js">
         var Fix = "class";  // safety class attribute declaration
         regexp = new RegExp(" " + Fix + "=", "g");
         data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
         
         // marks ;
         data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
-      </code>
-    </pre>
+    </textarea>
     <section>-html</section>
-    <pre><code class="code-html">
+    <textarea class="code-html">
         var Fix = "class";  // safety class attribute declaration
         regexp = new RegExp(" " + Fix + "=", "g");
         data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
         
         // marks ;
         data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
-    </code>
-    </pre>    
-<section>-xml</section>
-    <pre><code class="code-xml">
+    </textarea>    
+    <section>-xml</section>
+    <textarea class="code-xml">
         var Fix = "class";  // safety class attribute declaration
         regexp = new RegExp(" " + Fix + "=", "g");
         data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
         
         // marks ;
         data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
-    </code>
-    </pre>    
+    </textarea>    
     <section>no postfix</section>
-    <pre><code class="code">
+    <textarea class="code">
         var Fix = "class";  // safety class attribute declaration
         regexp = new RegExp(" " + Fix + "=", "g");
         data = data.replace(regexp, " <span class='my-highlight-attribute'>" + Fix + "=</span>");
         
         // marks ;
         data = data.replace(/\^\^\|\^/g, "<span class='my-highlight-semicolon'>;</span>");
-    </code>
-    </pre>    
-    
-    <script>
-
-    </script>
+    </textarea>    
   </body>
 </html>
 

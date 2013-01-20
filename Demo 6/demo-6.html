@@ -1,7 +1,7 @@
-<title>My highlighter demo page</title>
+<!DOCTYPE html>
 <html>
   <head>
-    <title>xmlstore</title>
+    <title>My highlighter demo page</title>
     <meta charset="utf-8"/>
     <meta name="author" content="PhDr. Matej Lednár, PhD."/>    
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/dojo/1.7.3/dijit/themes/claro/claro.css"/>
@@ -17,14 +17,14 @@
     <h1>My highlighter demo page - Dojox data XML store / DataGrid sample</h1>
     <h2>&lt;script src="my-highlighter.js" data-highlight-only="true" data-class="className">&lt;/script></h2>
     <h3>&lt;link rel="stylesheet" href="default.css"/></h3> 
-    <h4>Default CSS themes, automatic highlighter activation, highlights inserted content only (&ltpre>&lt;code class="code"> content &lt/pre>&lt;/code>).</h4>
+    <h4>Default CSS themes, automatic highlighter activation, highlights inserted content only (&lt;textarea class="code"> content &lt;/textarea>).</h4>
     <h4>Own css class prefix (data-class="matej").</h4>
-    <pre><code class="matej">
+    <textarea class="matej">
       <article data-dojo-type="dojox.data.XmlStore" data-dojo-props="rootItem: 'row', 
       url : 'data-1.xml'" data-dojo-id="display">
       </article>
       <table data-dojo-type="dojox.grid.DataGrid" data-dojo-props="autoHeight : true, autoWidth : true, 
-      store : display" id="grid">
+      store : display" id="grid1">
         <thead>
           <tr>
             <th field="cell1">Column 1</th>
@@ -32,15 +32,15 @@
           </tr>
         </thead>
       </table>
-      </code>
-    </pre>
-    <pre><code class="matej">
+      </textarea>
+
+    <textarea class="matej">
       <article data-dojo-type="dojox.data.XmlStore" data-dojo-props="rootItem: 'row', 
                url : 'data-1.xml'" data-dojo-id="display">
       </article>
 
       <table data-dojo-type="dojox.grid.DataGrid" data-dojo-props="autoHeight : true, autoWidth : true, 
-             store : display" id="grid">
+             store : display" id="grid2">
         <thead>
           <tr>
             <th field="cell1">Column 1</th>
@@ -48,12 +48,7 @@
           </tr>
         </thead>
       </table>
-    </code>
-    </pre>    
-
-    <script>
-
-    </script>
+    </textarea>    
   </body>
 </html>
 

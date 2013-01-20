@@ -3,6 +3,21 @@ Default color theme
 Library CSS prefix - my
 */
 
+.my-highlight-show-as-pre-element {
+  font-family: monospace;
+  white-space: pre;
+  margin: 1em 0px;
+}
+
+.my-highlight-show-as-pre-element td{
+  white-space: pre;
+}
+
+
+.my-highlight-hide {
+  display : none;
+}
+
 .my-highlight-tag, .my-highlight-tag-html, 
 .my-highlight-tag-xml {
   color : blue;

@@ -3,7 +3,7 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Version 1.29
+Version 1.30
 (c) 2012-2013
  Author: PhDr. Matej Lednár, PhD.
  
@@ -19,8 +19,9 @@ My highlighter features:
 - user can define colors and statements for HTML, XML, JavaScript and DOM,
 - user can use own CSS rules,
 - user can display and highlight website's source code (must be a descendant of the <body> element),
-- user can display and highlight inserted content into &lt;pre>&lt;code> elements,
+- user can display and highlight inserted content into &lt;textarea> element,
 - user can define the content that may displays only once, add data-code="once" to the target element,
+- inserted code is valid html document
 
 TODO:
 - add JS/DOM support - more statements,

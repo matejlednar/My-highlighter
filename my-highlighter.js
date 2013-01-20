@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.29
+// Version 1.30
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -15,7 +15,7 @@
 // User can define colors and statements for HTML, XML, JavaScript and DOM
 // User can use own CSS rules
 // User can display and highlight website's source code (must be a descendant of the <body> element)
-// User can display and highlight inserted content into <pre><code> elements
+// User can display and highlight inserted content into <textarea> element
 // User can define that content may displays only once, add data-code="once" to the target element
 
 // TODO add JS/DOM support - more statements
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// bugfix comments processing
+// refactoring - html validation fix, <pre><code> is not valid with other html elements e.g. table
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -405,6 +405,7 @@
                         tmp = data.match(/.*\*\//g);
                         tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
                         data = data.replace(/(.*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
+
                         // multiline comment end flag
                         self.multilineComment = false;
                     }
@@ -424,7 +425,6 @@
 
             // deletes left indentation
             code = code.replace(/\t/g, ""); // removes tabs
-            //debugger
             if (!self.codeIndent) {
                 code = code.replace(/(^\s{6})|(^\s{4})/, ""); // removes spaces 4 or 6
             }
@@ -479,22 +479,47 @@
         }
 
         function runHighlighterCore(className, self) {
+            var content;
 
+            // from document - highlights document fragment
             if (highlightOnly == false) {
                 var target = self.tag("body", 0);
-                var pre_element = document.createElement("pre");
-                pre_element.setAttribute("class", "show-code-" + self.counter);
+                var pre_element = document.createElement("section");
+                pre_element.setAttribute("class", "my-highlight-show-as-pre-element show-code-" + self.counter);
                 target.appendChild(pre_element);
 
                 target.insertBefore(document.querySelector(".show-code-" + self.counter), document.querySelectorAll(className)[(i)]);
 
                 target = document.querySelector(".show-code-" + self.counter);
-                var code_element = document.createElement("code");
+                var code_element = document.createElement("section");
                 code_element.setAttribute("class", "code-element-" + self.counter);
                 target.appendChild(code_element);
+
+                content = document.querySelectorAll(className)[(i)].innerHTML;
+
             }
 
-            var content = document.querySelectorAll(className)[(i)].innerHTML;
+            // from element textarea - highlights textarea content
+            // creates new section element, inserts textarea content into the new section element, hides textarea element
+            else {
+                var codeNode = document.querySelectorAll(className)[0];
+                var codeNodeName = codeNode.nodeName;
+
+                if (codeNodeName.toLowerCase() == "textarea") {
+
+                    target = codeNode.parentElement;
+                    content = document.querySelectorAll(className)[0].innerHTML;
+
+                    var section_element = document.createElement("section");
+                    section_element.setAttribute("class", "my-highlight-show-as-pre-element my-highlight-inserted-section-element-" + self.counter);
+                    content = content.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+                    section_element.innerHTML = content;
+                    target.insertBefore(section_element, codeNode);
+                    
+                    content = section_element.innerHTML;
+                    codeNode.setAttribute("class", "my-highlight-hide");
+                }
+            }
 
             // has element content? no content == no highlight
             var tmp = /\w|[\]\[!"#\$%&'\(\)*+,\.\/:;<=>?@\^_`\{\|\}~-]/g;
@@ -512,9 +537,11 @@
             content = content.replace(/;/g, "^^|^").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
             if (highlightOnly == false) {
+                // gets content from section element as copy of the document element
                 source = document.querySelector(".code-element-" + self.counter)
             } else {
-                source = document.querySelectorAll(className)[(i)]
+                // gets content from new section element
+                source = document.querySelectorAll(".my-highlight-inserted-section-element-" + self.counter)[0];
             }
 
             source.innerHTML = content;
