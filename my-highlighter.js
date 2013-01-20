@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.30
+// Version 1.31
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -81,6 +81,7 @@
     _.classCodeJS = false;
     _.classCodeXML = false;
     _.counter = 0; // code section identifier
+    _.textareaCounter = 0; // textarea section identifier
     /** _.tag
      * gets an element from nodelist by index
      * @param {String} element - the name of the element
@@ -483,6 +484,7 @@
 
             // from document - highlights document fragment
             if (highlightOnly == false) {
+
                 var target = self.tag("body", 0);
                 var pre_element = document.createElement("section");
                 pre_element.setAttribute("class", "my-highlight-show-as-pre-element show-code-" + self.counter);
@@ -502,20 +504,25 @@
             // from element textarea - highlights textarea content
             // creates new section element, inserts textarea content into the new section element, hides textarea element
             else {
+
+                
+                
                 var codeNode = document.querySelectorAll(className)[0];
                 var codeNodeName = codeNode.nodeName;
 
                 if (codeNodeName.toLowerCase() == "textarea") {
 
+                    self.textareaCounter++;
+                    
                     target = codeNode.parentElement;
                     content = document.querySelectorAll(className)[0].innerHTML;
 
                     var section_element = document.createElement("section");
-                    section_element.setAttribute("class", "my-highlight-show-as-pre-element my-highlight-inserted-section-element-" + self.counter);
+                    section_element.setAttribute("class", "my-highlight-show-as-pre-element my-highlight-inserted-section-element-" + self.textareaCounter);
                     content = content.replace(/</g, "&lt;").replace(/>/g, "&gt;");
                     section_element.innerHTML = content;
                     target.insertBefore(section_element, codeNode);
-                    
+
                     content = section_element.innerHTML;
                     codeNode.setAttribute("class", "my-highlight-hide");
                 }
@@ -541,7 +548,7 @@
                 source = document.querySelector(".code-element-" + self.counter)
             } else {
                 // gets content from new section element
-                source = document.querySelectorAll(".my-highlight-inserted-section-element-" + self.counter)[0];
+                source = document.querySelectorAll(".my-highlight-inserted-section-element-" + self.textareaCounter)[0];
             }
 
             source.innerHTML = content;
@@ -708,7 +715,7 @@
             }
             this.classCodeXML = false;
         }
-
+        this.textareaCounter = 0;
     };
 
     // onload library settings
