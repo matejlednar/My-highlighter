@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.31
+// Version 1.32
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,8 @@
 // TODO display plain text
 
 // Latest updates:
-// refactoring - html validation fix, <pre><code> is not valid with other html elements e.g. table
+// BUGFIX - empty strings
+// BUGFIX - missing characters for highlighting HTML attributes
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -201,8 +202,8 @@
                 // marks elements
                 function highlightElements(classPostfix) {
                     //  data = data.replace(/(&lt;\/?[a-zA-Z-0-9\s-\";:,\.'\(\)=\^\|]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
-                    data = data.replace(/(&lt;\/?[a-zA-Z-0-9\-]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
-                    data = data.replace(/(&lt;\/?[a-zA-Z-0-9\-\";:,\.'=\(\)\^\|\sáéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ\\\/]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
+                    data = data.replace(/(&lt;\/?[a-zA-Z-0-9\-]*?&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
+                    data = data.replace(/(&lt;\/?[a-zA-Z-0-9\-\";:,\.'=\(\)\^\|\s<>_áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ\\\/]*?&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
                     data = data.replace(/(&lt;!DOCTYPE?[a-zA-Z-0-9\-\"\/;:,\.'=\(\)\^\|\s]*&gt;)/g, "<span class='my-highlight-tag" + classPostfix + "'>$1</span>");
                 }
                 if (classCodeHTML) {
@@ -239,7 +240,11 @@
 
                 // marks strings, user can define special colors for code, JS and HTML
                 function highlightString(classPostfix) {
-                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?>#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
+		    // empty string preventions
+		    data = data.replace(/""/g, "^^|^");
+                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?>_#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+?)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
+		    // returns back empty string
+		    data = data.replace(/\^\^\|\^/g, "\"\"");
                 }
                 if (classCodeHTML) {
                     highlightString("-html");
