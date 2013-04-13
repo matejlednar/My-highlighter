@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.32
+// Version 1.33
 // (c) 2012-2013
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,8 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// BUGFIX - empty strings
-// BUGFIX - missing characters for highlighting HTML attributes
+// BUGFIX - string definition update
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -242,7 +241,7 @@
                 function highlightString(classPostfix) {
 		    // empty string preventions
 		    data = data.replace(/""/g, "^^|^");
-                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?>_#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+?)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
+                    data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?!>_#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+?)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
 		    // returns back empty string
 		    data = data.replace(/\^\^\|\^/g, "\"\"");
                 }
