@@ -386,10 +386,10 @@
                     // flag for one or more /* */ comments in a line
                     var isFullComment = data.match(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g);
 
-                    // flag for highlights content after /*
+                    // flag for highlight content after /*
                     var isStartComment = data.match(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)/g);
 
-                    // flag for highlights content before */
+                    // flag for highlight content before */
                     var isEndComment = data.match(/([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g);
 
                     // one or more /* */ comments in a line
