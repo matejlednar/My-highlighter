@@ -1,6 +1,6 @@
 // My highlighter
-// Version 1.33
-// (c) 2012-2013
+// Version 1.34
+// (c) 2012-2014
 // Author: PhDr. Matej Lednár, PhD.
 // 
 // JavaScript simple syntax highlighter with support XML, HTML, Javascript, and DOM languages.
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// BUGFIX - string definition update
+// BUGFIX - regexp update, missing | character
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -369,9 +369,9 @@
                     // one /* */ comment in a line
                     if (sFlagLength == 1 && eFlagLength == 1) {
                         tmp = [];
-                        tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*\*\//g);
+                        tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*\*\//g);
                         tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
+                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
                     }
 
                     // more /* */ comments in a line
