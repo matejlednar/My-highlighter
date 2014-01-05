@@ -383,7 +383,7 @@
                         return "<span class='my-highlight-comment'>" + result + "</span>";
                     }
 
-                    // flag fot one or more /* */ comments in a line
+                    // flag for one or more /* */ comments in a line
                     var isFullComment = data.match(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g);
 
                     // flag for highlights content after /*
