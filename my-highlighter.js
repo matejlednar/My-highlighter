@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.34
+// Version 1.35
 // (c) 2012-2014
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// BUGFIX - regexp update, missing | character
+// BUGFIX - regexp update for multiline comments
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]
@@ -67,10 +67,11 @@
 
  */
 
-(function () {
+(function() {
 
     // The library prefix is _ (underscore).
-    var _ = {};
+    var _ = {
+    };
 
     _.prefix = "_"; // default library prefix
     _.code = true; // runs highlighter automatically for all elements with code class
@@ -87,7 +88,7 @@
      * @param {String} element - the name of the element
      * @param {Number} index - index of the element in the nodelist
      */
-    _.tag = function (element, index) {
+    _.tag = function(element, index) {
         return document.getElementsByTagName(element)[index];
     };
 
@@ -95,7 +96,7 @@
      * writes an argument into console
      * @param {String} data - text for the console
      */
-    _.log = function (data) {
+    _.log = function(data) {
         console.log(data);
     };
 
@@ -106,8 +107,8 @@
      * @param {Function} fun - name of the registered function
      * @param {Boolean} phase - has capture phase? [true | false]
      */
-    _.regEvent = function (element, event, fun, phase) {
-        phase = !! phase;
+    _.regEvent = function(element, event, fun, phase) {
+        phase = !!phase;
         if (element.addEventListener == undefined) {
             element.attachEvent("on" + event, fun);
         } else {
@@ -122,9 +123,10 @@
      * @param {Function} fun - name of the registered function
      * @param {Boolean} phase - has capture phase? [true | false]
      */
-    _.unregEvent = function (element, event, fun, phase) {
-        phase = !! phase;
-        if (element.removeEventListener == undefined) element.detachEvent("on" + event, fun);
+    _.unregEvent = function(element, event, fun, phase) {
+        phase = !!phase;
+        if (element.removeEventListener == undefined)
+            element.detachEvent("on" + event, fun);
         else {
             element.removeEventListener(event, fun, phase);
         }
@@ -136,7 +138,7 @@
      * data-code attribute with false value deactivates highlighting
      * @param {String} className - value of the data-class attribute if was set
      */
-    _.showCode = function (className) {
+    _.showCode = function(className) {
         var self = this;
         // set class for highlighter
         if (!className) {
@@ -169,24 +171,37 @@
 
             function highlightCode(data, self) {
                 if (classCodeJS || classCode) {
-                    var JSObjects = ["RegExp", "Object", "Array", "Math", "Boolean", "Date", "Function", "Number", "String"];
+                    var JSObjects = ["RegExp", "Object", "Array", "Math",
+                        "Boolean", "Date", "Function", "Number", "String"];
 
-                    var JSProperties = ["search", "replace", "length", "value", "slice", "split", "round", "ceil", "floor"];
+                    var JSProperties = ["search", "replace", "length", "value",
+                        "slice", "split", "round", "ceil", "floor"];
 
-                    var JSStatements = ["var", "function", "if", "else", "switch", "case", "return", "for", "new"];
+                    var JSStatements = ["var", "function", "if", "else",
+                        "switch", "case", "return", "for", "new"];
 
-                    var DOMObjects = ["this", "document", "window", "history", "console"];
+                    var DOMObjects = ["this", "document", "window", "history",
+                        "console"];
 
-                    var DOMProperties = ["write", "submit", "reset", "forms", "writeln", "getElementById", "childNodes", "value", "nodeValue", "innerText", "innerHTML", "firstChild", "createElement", "log", "style", "getElementsByTagName", "setSelectionRange", "selectionStart", "selectionEnd", "focus"];
+                    var DOMProperties = ["write", "submit", "reset", "forms",
+                        "writeln", "getElementById", "childNodes", "value",
+                        "nodeValue", "innerText", "innerHTML", "firstChild",
+                        "createElement", "log", "style",
+                        "getElementsByTagName", "setSelectionRange",
+                        "selectionStart", "selectionEnd", "focus"];
 
                     // \s as a first char, \s as a last char
-                    var JSOperators1 = ["/", "-", "\\?", "\\*", "\\+", "in", "==", "&gt;", "&lt;", "&gt;=", "&lt;=", "=", "\\!==", "===", "\\|\\|"];
+                    var JSOperators1 = ["/", "-", "\\?", "\\*", "\\+", "in",
+                        "==", "&gt;", "&lt;", "&gt;=", "&lt;=", "=", "\\!==",
+                        "===", "\\|\\|"];
 
                     // \( | \s | ^ as a first char, \s as a last char
-                    var JSOperators2 = ["delete", "typeof", "instanceof", "new"];
+                    var JSOperators2 = ["delete", "typeof", "instanceof",
+                        "new"];
 
                     // no \s | ^
-                    var JSOperators3 = ["\\.", "\\(", "\\)", "\\[", "\\]", "\\{", "\\}"];
+                    var JSOperators3 = ["\\.", "\\(", "\\)", "\\[", "\\]",
+                        "\\{", "\\}"];
                 }
 
                 var regexp;
@@ -239,11 +254,11 @@
 
                 // marks strings, user can define special colors for code, JS and HTML
                 function highlightString(classPostfix) {
-		    // empty string preventions
-		    data = data.replace(/""/g, "^^|^");
+                    // empty string preventions
+                    data = data.replace(/""/g, "^^|^");
                     data = data.replace(/\"([a-zA-Z0-9;<\-\/\.':,\s\(\)\[\]\+=\?!>_#\$&\^\\%áéíóúôýľščťžäÁÉÍÓÚÔÝĽŠČŤŽÄ]+?)\"/g, "\"<span class='my-highlight-string" + classPostfix + "'>$1</span>\"");
-		    // returns back empty string
-		    data = data.replace(/\^\^\|\^/g, "\"\"");
+                    // returns back empty string
+                    data = data.replace(/\^\^\|\^/g, "\"\"");
                 }
                 if (classCodeHTML) {
                     highlightString("-html");
@@ -360,68 +375,37 @@
                 data = tmp.join("<span class='my-highlight-quotation'>\"</span>");
 
                 // multiline comments marker
-                var startFlag = data.match(/\/\*/g);
-                var endFlag = data.match(/\*\//g);
-                var sFlagLength = startFlag ? startFlag.length : 0;
-                var eFlagLength = endFlag ? endFlag.length : 0;
-                if (sFlagLength || eFlagLength) {
-
-                    // one /* */ comment in a line
-                    if (sFlagLength == 1 && eFlagLength == 1) {
-                        tmp = [];
-                        tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*\*\//g);
-                        tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
+                // 
+                // removes highlighter classes from comment
+                if (data.indexOf("/*") != -1 || data.indexOf("*/") != -1) {
+                    function removeHighligtingFromComments(matchedData) {
+                        var result = matchedData.replace(/class='my-highlight-[a-z-]*'/g, "");
+                        return "<span class='my-highlight-comment'>" + result + "</span>";
                     }
 
-                    // more /* */ comments in a line
-                    if (sFlagLength > 1 && eFlagLength > 1 && (sFlagLength == eFlagLength)) {
-                        var tmp1 = [];
-                        tmp = [];
-                        tmp = data.split("/*");
-                        tmpLength = tmp.length;
-                        var counter = 0,
-                            result = "";
-                        for (counter; counter < tmpLength; counter++) {
-                            tmp1 = tmp[counter].split("*/");
-                            if (tmp1[0] != "") {
-                                tmp1[0] = "/*" + tmp1[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                                result += tmp1.join("*/");
-                            }
-                        }
-                        data = result;
-                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)(\*\/)/g, "<span class='my-highlight-comment'>/*$2*/</span>");
+                    // flag fot one or more /* */ comments in a line
+                    var isFullComment = data.match(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g);
+
+                    // flag for highlights content after /*
+                    var isStartComment = data.match(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)/g);
+
+                    // flag for highlights content before */
+                    var isEndComment = data.match(/([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g);
+
+                    // one or more /* */ comments in a line
+                    if (isFullComment && isFullComment.length > 0) {
+                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g, removeHighligtingFromComments);
                     }
 
                     // highlights content after /*
-                    if (sFlagLength == 1 && eFlagLength == 0) {
-                        tmp = [];
-                        tmp = data.match(/\/\*[a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*/g);
-                        tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
-
-                        // multiline comment start flag
-                        self.multilineComment = true;
+                    else if (isStartComment && (isStartComment.length === 1)) {
+                        data = data.replace(/(\/\*)([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s]*)/g, removeHighligtingFromComments);
                     }
-
                     // highlights content before */
-                    if (sFlagLength == 0 && eFlagLength == 1) {
-                        tmp = [];
-                        tmp = data.match(/.*\*\//g);
-                        tmp[0] = tmp[0].replace(/class='my-highlight-[a-z-]*'/g, "");
-                        data = data.replace(/(.*)(\*\/)/g, "<span class='my-highlight-comment'>" + tmp[0] + "</span>");
-
-                        // multiline comment end flag
-                        self.multilineComment = false;
+                    else if (isEndComment && isEndComment.length === 1) {
+                        data = data.replace(/([a-zA-Z0-9;<\-\/\.':,\(\)\[\]\+=\?>#\$&\^%\s|]*)(\*\/)/g, removeHighligtingFromComments);
                     }
                 }
-
-                // checks if this line is inside the multiline comment
-                if (self.multilineComment) {
-                    data = data.replace(/class='my-highlight-[a-z-]*'/g, "");
-                    data = "<span class='my-highlight-comment'>" + data + "</span>";
-                }
-
                 // end of multiline comments
 
                 // returns higlighted line
@@ -509,15 +493,15 @@
             // creates new section element, inserts textarea content into the new section element, hides textarea element
             else {
 
-                
-                
+
+
                 var codeNode = document.querySelectorAll(className)[0];
                 var codeNodeName = codeNode.nodeName;
 
                 if (codeNodeName.toLowerCase() == "textarea") {
 
                     self.textareaCounter++;
-                    
+
                     target = codeNode.parentElement;
                     content = document.querySelectorAll(className)[0].innerHTML;
 
@@ -723,7 +707,7 @@
     };
 
     // onload library settings
-    _.initLibrary = function () {
+    _.initLibrary = function() {
         var scriptElements = document.getElementsByTagName("script");
         var scriptElements_number = scriptElements.length;
 
@@ -763,12 +747,12 @@
 
     // gets library setting and creates global object _ or object 
     // defined by data-conflict attribute
-    _.runLibrary = function () {
+    _.runLibrary = function() {
         this.initLibrary();
 
         // displays all elements content with class="code"
         function showCode(className) {
-            return function () {
+            return function() {
                 _.showCode(className);
             }
         }
