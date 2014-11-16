@@ -3,7 +3,9 @@ My-highlighter
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
-Version 1.35
+
+For version history see history documentation.
+
 (c) 2012-2014
  Author: PhDr. Matej Lednár, PhD.
  

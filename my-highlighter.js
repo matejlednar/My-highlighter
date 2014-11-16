@@ -1,5 +1,5 @@
 // My highlighter
-// Version 1.35
+// Version 1.36
 // (c) 2012-2014
 // Author: PhDr. Matej Lednár, PhD.
 // 
@@ -24,7 +24,7 @@
 // TODO display plain text
 
 // Latest updates:
-// BUGFIX - regexp update for multiline comments
+// see official documentation
 
 // Use HTML script element for library activation.
 // <script [data-code="false|true"] [data-class="className"] [data-indent="true"]

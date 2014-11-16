@@ -83,12 +83,14 @@ Library CSS prefix - my
 
 /* space between cells */
 .my-table-cell-spacing {
-  border-collapse : collapse;
-  line-height : 10px;  /* 14px */
+  // border-collapse : collapse;
+  // line-height : 10px;  /* 14px */
+  line-height : 14px;
 }
 
 .my-table-left-column-numbers {
-  min-width : 40px; 
+  // min-width : 40px; 
+  min-width : 10px; 
   padding-left : 15px;
 }
 
