@@ -1,4 +1,4 @@
-MyHighlighter history
+My Highlighter history
 
 Changes
 
