@@ -1,5 +1,5 @@
-My-highlighter
-==============
+# My-highlighter
+
 
 Syntax Highlighter for JS, HTML, XML and DOM. 
 My highlighter
@@ -36,33 +36,34 @@ Prohibited string:
 
 
 Use HTML script element for library activation.
-
-&lt;script [data-code="false|true"] [data-class="className"] [data-indent="true"]
-[data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js">&lt; /script>
-
+```
+<script [data-code="false|true"] [data-class="className"] [data-indent="true"]
+[data-conflict="libraryPrefix"] [data-highlight-only="false|true"] src="my-highlighter.js"></script>
+```
 User can invoke _.showCode() method unlimited times and defines elements that will be highlighted only once.
-&lt;element data-code="once"> content &lt;/element>
-
-Default library settings.
-
- &lt;link rel="StyleSheet" type="text/css" href="default.css"/>
- &lt;script src="my-highlighter.js">&lt;/script>
-
-Recommended settings for JavaScript frameworks (e.g. Dojo).
+```
+<element data-code="once"> content </element>
+```
+## Default library settings.
+```
+ <link rel="StyleSheet" type="text/css" href="default.css"/>
+ <script src="my-highlighter.js"></script>
+```
+## Recommended settings for JavaScript frameworks (e.g. Dojo).
  Run showCode(); manually. showCode() method will be deleted from the output.
-
+```
  <script src="my-highlighter.js" data-code="false"></script>
  _.showCode();  // see demos
+```
 
-
- HTML attributes description:
+## HTML attributes description:
 - data-code="false"          - disables automatic highlighting, user can run the highlighter manually.
 - data-class="className"     - changes highlighter's class name.
 - data-conflict="prefix"     - changes library's prefix.
 - data-highlight-only="true" - highlights only elements with class="code", no node clone.
 - data-indent="true"         - allows left indentation of the content
 
-Library's functions overview
+## Library's functions overview
   
    This is a part of the mllibrary.js (author: Matej Lednár)
    
